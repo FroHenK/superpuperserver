@@ -6,6 +6,7 @@ import java.net.*;
 public class App {
     public static final int port = 6666;
     public static final int serverport = 80;
+    public static final String mem_dir = "/home/azat/memes";
     public static final String myip = "10.21.135.98";
     public static void main(String[] args) {
         try {

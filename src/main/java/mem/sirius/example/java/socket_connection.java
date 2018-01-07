@@ -3,9 +3,10 @@ package mem.sirius.example.java;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-import static mem.sirius.example.java.App.myip;
-import static mem.sirius.example.java.App.serverport;
 
 public class socket_connection extends Thread {
     private Socket socket;
@@ -31,16 +32,18 @@ public class socket_connection extends Thread {
             String line = null;
             while (true) {
                 line = in.readUTF();
-                System.out.println("The dumb client just sent me this line : " + line);
-                System.out.println("I'm sending it back...");
-                out.writeUTF(line);
-                out.flush();
-                parse_fol dir = new parse_fol();
-                File memes = new File("/home/azat/memes");
-                dir.processFilesFromFolder(memes);
-                System.out.println(dir.getLinksAccepted(null, 5, "http://" + myip + ":" + serverport + "/"));
-                System.out.println("Waiting for the next line...");
-                System.out.println();
+                Request request = new Request(line);
+                if (request.links.get("type").equals("get_list")){
+                    get_list response = new get_list(request);
+                    String ans = response.toString();
+                    if (ans != null) {
+                        System.out.println("New answer for getlist " + ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                    continue;
+                }
             }
         } catch (Exception x) {
             x.printStackTrace();

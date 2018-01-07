@@ -18,18 +18,15 @@ public class parse_fol {
     }
 
     public String getLinksAccepted(String a, Integer b, String serverpath) {
-        String ans = null;
+        String ans = "";
         for (String path : files) {
             if (b == 0){
                 break;
             }
-            if (ans != null) {
+            if (ans.length() != 0) {
                 ans = ans + ',';
             }
-            if (a == null || path.compareTo(a) < 0){
-                if (ans == null){
-                    ans = "";
-                }
+            if (a.length() == 0 || path.compareTo(a) <= 0){
                 ans = ans + serverpath + path;
                 b--;
             }
