@@ -11,12 +11,8 @@ import java.util.TreeMap;
 public class socket_connection extends Thread {
     private Socket socket;
 
-    public socket_connection (ServerSocket ss) {
-        try {
-            socket = ss.accept();
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
+    public socket_connection (Socket ss) {
+        socket = ss;
     }
 
     public void run() {

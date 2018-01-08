@@ -8,14 +8,17 @@ public class App {
     public static final int serverport = 80;
     public static final String mem_dir = "/home/azat/memes";
     public static final String myip = "10.21.135.98";
+
     public static void main(String[] args) {
-        try {
-            ServerSocket ss = new ServerSocket(port);
-            System.out.println("Waiting for a client...");
-            new Thread(new socket_connection(ss)).start();
-        }catch (Exception x) {
-            x.printStackTrace();
-        }
+        while (true)
+            try {
+                ServerSocket ss = new ServerSocket(port);
+                System.out.println("Waiting for a client...");
+                Socket socket = ss.accept();
+                new Thread(new socket_connection(socket)).start();
+            } catch (Exception x) {
+                x.printStackTrace();
+            }
 
     }
 }
