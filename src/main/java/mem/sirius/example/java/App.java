@@ -6,8 +6,8 @@ import java.net.Socket;
 
 public class App {
     public static final int port = 6666;
-    public static final String myip = "https://memsproblems.000webhostapp.com/ac/";
-    public static final String mem_dir = "/home/azat/memes/ac";
+    public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
+    public static final String mem_dir = "/home/azat/memes";
 
     public static void main(String[] args) {
         ServerSocket ss = null;

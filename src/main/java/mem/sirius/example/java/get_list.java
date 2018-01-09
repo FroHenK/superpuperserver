@@ -17,7 +17,7 @@ public class get_list {
         File memes = new File(mem_dir);
         dir.processFilesFromFolder(memes);
         TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
-        a.put("links", dir.getLinksAccepted(links.get("last"), Integer.parseInt(links.get("count")), myip));
+        a.put("links", dir.getLinksAccepted(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")), myip));
         return (new Response(a));
     }
 }

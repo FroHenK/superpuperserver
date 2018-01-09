@@ -18,7 +18,7 @@ public class parse_fol {
         }
     }
 
-    public ArrayList<String> getLinksAccepted(String a, Integer b, String serverpath) {
+    public ArrayList<String> getLinksAccepted(Integer last, Integer b, String serverpath) {
         ArrayList<String> ans = new ArrayList<String>();
         Collections.sort(files);
         for (String path : files) {
@@ -26,9 +26,11 @@ public class parse_fol {
             if (b == 0){
                 break;
             }
-            if (a.length() == 0 || path.compareTo(a) > 0) {
+            if (last == 0) {
                 ans.add(serverpath + path);
                 b--;
+            } else {
+                last--;
             }
         }
         return ans;
