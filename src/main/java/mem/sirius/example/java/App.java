@@ -15,6 +15,7 @@ public class App {
         ServerSocket ss = null;
         try {
             ss = new ServerSocket(port);
+            Socket socket = ss.accept();
         } catch (Exception x) {
             x.printStackTrace();
         }
