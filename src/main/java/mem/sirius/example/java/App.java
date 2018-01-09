@@ -5,11 +5,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class App {
-    public static final int port = 40506;
+    public static int port = 0;
     public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
     public static final String mem_dir = "/home/azat/memes";
 
     public static void main(String[] args) {
+        port = Integer.parseInt(System.getenv("PORT"));
+        System.out.println("Port is :" + port);
         ServerSocket ss = null;
         try {
             ss = new ServerSocket(port);
