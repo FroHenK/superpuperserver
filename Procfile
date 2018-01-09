@@ -1,1 +1,1 @@
-web: java -jar out/artifacts/server_jar/server.jar
+web: java -jar server.jar

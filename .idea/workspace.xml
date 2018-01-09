@@ -6,9 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Heroku">
-      <change beforePath="" afterPath="$PROJECT_DIR$/server.jar" />
+    <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Server.jar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/Procfile" />
       <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -129,7 +129,7 @@
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
+              <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -478,7 +478,7 @@
       <workItem from="1515415641339" duration="7101000" />
       <workItem from="1515424943412" duration="983000" />
       <workItem from="1515428859710" duration="12179000" />
-      <workItem from="1515478280464" duration="12516000" />
+      <workItem from="1515478280464" duration="12536000" />
     </task>
     <task id="LOCAL-00001" summary="First">
       <created>1515342002525</created>
@@ -557,7 +557,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515496652282</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Server.jar">
+      <created>1515496971652</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1515496971652</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -569,7 +576,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57590000" />
+    <option name="totallyTimeSpent" value="57610000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -659,7 +666,8 @@
     <MESSAGE value="Fixing format" />
     <MESSAGE value="Deploy" />
     <MESSAGE value="Heroku" />
-    <option name="LAST_COMMIT_MESSAGE" value="Heroku" />
+    <MESSAGE value="Server.jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Server.jar" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1110,7 +1118,7 @@
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
+          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
           <folding />
         </state>
       </provider>
