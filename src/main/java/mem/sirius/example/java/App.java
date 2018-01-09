@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class App {
-    public static final int port = 6666;
+    public static final int port = 40506;
     public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
     public static final String mem_dir = "/home/azat/memes";
 
