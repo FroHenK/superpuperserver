@@ -26,10 +26,14 @@ public class socket_connection extends Thread {
 
             String line = null;
             while (true) {
-                line = in.readUTF();
+                try {
+                    line = in.readUTF();
+                } catch (Exception x) {
+                    socket.close();
+                    break;
+                }
                 Request request = new Request(line);
                 if (request.links.get("type").equals("get_list")){
-                    System.out.println("New zap " + line);
                     get_list response = new get_list(request);
                     String ans = response.getResponse().toString();
                     if (ans != null) {

@@ -11,7 +11,7 @@ public class App {
     public static final String mem_dir = "/home/azat/memes";
 
     public static void main(String[] args) {
-        port = Integer.parseInt(System.getenv("PORT"));
+        port = Integer.parseInt(System.getenv("$PORT"));
         System.out.println("Port is :" + port);
         ServerSocket ss = null;
         try {
