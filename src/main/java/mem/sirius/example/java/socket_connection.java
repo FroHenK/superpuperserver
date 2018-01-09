@@ -26,7 +26,12 @@ public class socket_connection extends Thread {
 
             String line = null;
             while (true) {
-                line = in.readUTF();
+                try {
+                    line = in.readUTF();
+                } catch (Exception x) {
+                    socket.close();
+                    break;
+                }
                 Request request = new Request(line);
                 if (request.links.get("type").equals("get_list")){
                     get_list response = new get_list(request);
