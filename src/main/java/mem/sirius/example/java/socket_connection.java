@@ -28,6 +28,7 @@ public class socket_connection extends Thread {
             while (true) {
                 try {
                     line = in.readUTF();
+                    System.out.println(line);
                 } catch (Exception x) {
                     socket.close();
                     break;
