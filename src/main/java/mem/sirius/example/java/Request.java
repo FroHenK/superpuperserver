@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.TreeMap;
 
 public class Request {
-    public TreeMap<String, String> links;
+    public TreeMap<String, String> links = new TreeMap<String, String>();
     public Request(String s){
         links = new Gson().fromJson(s, links.getClass());
     }

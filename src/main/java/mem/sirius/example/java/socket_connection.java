@@ -1,11 +1,10 @@
 package mem.sirius.example.java;
 
-import java.io.*;
-import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class socket_connection extends Thread {
@@ -30,8 +29,9 @@ public class socket_connection extends Thread {
                 line = in.readUTF();
                 Request request = new Request(line);
                 if (request.links.get("type").equals("get_list")){
+                    System.out.println("New zap " + line);
                     get_list response = new get_list(request);
-                    String ans = response.toString();
+                    String ans = response.getResponse().toString();
                     if (ans != null) {
                         System.out.println("New answer for getlist " + ans);
                         System.out.println();
@@ -39,6 +39,11 @@ public class socket_connection extends Thread {
                         out.flush();
                     }
                     continue;
+                }
+                if (request.links.get("type").equals("close")) {
+                    System.out.println("User decide to close");
+                    socket.close();
+                    break;
                 }
             }
         } catch (Exception x) {

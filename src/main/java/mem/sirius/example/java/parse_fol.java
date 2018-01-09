@@ -2,6 +2,7 @@ package mem.sirius.example.java;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class parse_fol {
     private ArrayList<String> files = new ArrayList<String>();
@@ -17,17 +18,16 @@ public class parse_fol {
         }
     }
 
-    public String getLinksAccepted(String a, Integer b, String serverpath) {
-        String ans = "";
+    public ArrayList<String> getLinksAccepted(String a, Integer b, String serverpath) {
+        ArrayList<String> ans = new ArrayList<String>();
+        Collections.sort(files);
         for (String path : files) {
+            System.out.println(path);
             if (b == 0){
                 break;
             }
-            if (ans.length() != 0) {
-                ans = ans + ',';
-            }
-            if (a.length() == 0 || path.compareTo(a) <= 0){
-                ans = ans + serverpath + path;
+            if (a.length() == 0 || path.compareTo(a) > 0) {
+                ans.add(serverpath + path);
                 b--;
             }
         }

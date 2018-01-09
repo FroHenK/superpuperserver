@@ -1,18 +1,23 @@
 package mem.sirius.example.java;
 
 
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class App {
     public static final int port = 6666;
-    public static final int serverport = 80;
-    public static final String mem_dir = "/home/azat/memes";
-    public static final String myip = "10.21.135.98";
+    public static final String myip = "https://memsproblems.000webhostapp.com/ac/";
+    public static final String mem_dir = "/home/azat/memes/ac";
 
     public static void main(String[] args) {
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(port);
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
         while (true)
             try {
-                ServerSocket ss = new ServerSocket(port);
                 System.out.println("Waiting for a client...");
                 Socket socket = ss.accept();
                 new Thread(new socket_connection(socket)).start();
