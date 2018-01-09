@@ -27,7 +27,6 @@ public class socket_connection extends Thread {
             String line = null;
             while (true) {
                 line = in.readUTF();
-                System.out.println("New zap " + line);
                 Request request = new Request(line);
                 if (request.links.get("type").equals("get_list")){
                     get_list response = new get_list(request);
