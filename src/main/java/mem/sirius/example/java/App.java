@@ -4,6 +4,7 @@ package mem.sirius.example.java;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+// Zdes bil ya
 public class App {
     public static int port = 0;
     public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
