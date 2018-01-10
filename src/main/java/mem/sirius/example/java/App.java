@@ -9,7 +9,7 @@ public class App {
     public static final String PORT = "PORT";
     public static int port = 0;
     public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
-    public static final String mem_dir = "/home/azat/memes";
+    public static final String mem_dir = "memes";
 
     public static void main(String[] args) {
         port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "5000");
