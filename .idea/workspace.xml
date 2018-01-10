@@ -6,101 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Deploy">
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000000.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000001.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000002.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000003.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000004.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000005.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000006.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000007.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000008.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000009.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000010.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000011.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000012.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000013.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000014.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000015.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000016.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000017.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000018.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000019.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000020.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000021.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000022.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000023.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000024.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000025.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000026.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000027.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000028.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000029.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000030.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000031.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000032.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000033.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000034.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000035.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000036.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000037.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000038.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000039.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000040.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000041.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000042.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000043.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000044.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000045.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000046.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000047.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000048.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000049.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000050.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000051.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000052.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000053.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000054.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000055.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000056.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000057.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000058.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000059.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000060.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000061.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000062.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000063.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000064.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000065.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000066.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000067.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000068.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000069.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000070.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000071.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000072.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000073.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000074.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000075.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000076.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000077.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000078.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000079.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000080.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000081.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000082.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000083.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000084.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000085.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000086.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000087.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000088.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000089.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/memes/1000090.jpg" />
+    <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Added memes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/App.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/get_list.class" afterPath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/get_list.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -340,7 +248,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Heroku Deployment.Heroku Deployment">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -533,7 +441,7 @@
       <workItem from="1515502732659" duration="1726000" />
       <workItem from="1515504656556" duration="13000" />
       <workItem from="1515565312739" duration="1296000" />
-      <workItem from="1515566648370" duration="2413000" />
+      <workItem from="1515566648370" duration="2522000" />
     </task>
     <task id="LOCAL-00001" summary="First">
       <created>1515342002525</created>
@@ -801,7 +709,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515568745830</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Added memes">
+      <created>1515569069421</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1515569069421</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -813,7 +728,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65423000" />
+    <option name="totallyTimeSpent" value="65532000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -909,7 +824,8 @@
     <MESSAGE value="Pock" />
     <MESSAGE value="Fixed server" />
     <MESSAGE value="Deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deploy" />
+    <MESSAGE value="Added memes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added memes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
