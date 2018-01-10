@@ -13,6 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "5000");
+        port = 5000;
         System.out.println("Port is :" + port);
         ServerSocket ss = null;
         try {
