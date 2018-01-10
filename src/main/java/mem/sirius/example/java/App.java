@@ -16,7 +16,7 @@ public class App {
     private static final String MONGO_SALT = "MONGO_SALT";
 
     public static int port = 0;
-    public static final String myip = "http://memsproblems.000webhostapp.com/ac/";
+    public static final String myip = "http://azatismagilov00.siteme.org/ac/";
     public static final String mem_dir = "memes";
     private static String mongo_server;
     private static String mongo_password;
