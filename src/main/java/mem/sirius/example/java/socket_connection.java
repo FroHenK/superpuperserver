@@ -31,6 +31,8 @@ public class socket_connection extends Thread {
                 httpRequest += (char) i;
             }
 
+            System.out.println(httpRequest);
+
             String defaultResponse = "HTTP/1.1 200 OK\r\n" +
                     "Server: Meme\r\n" +
                     "X-Powered-By: Some guys laptop\r\n" +
@@ -49,6 +51,7 @@ public class socket_connection extends Thread {
                 try {
                     line = in.readUTF();
                 } catch (Exception x) {
+                    x.printStackTrace();
                     socket.close();
                     break;
                 }
