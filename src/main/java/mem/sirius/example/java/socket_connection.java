@@ -33,11 +33,11 @@ public class socket_connection extends Thread {
 
             System.out.println(httpRequest);
 
-            String defaultResponse = "HTTP/1.1 200 OK\r\n" +
-                    "Server: Meme\r\n" +
-                    "X-Powered-By: Some guys laptop\r\n" +
-                    "Content-Language: ru\r\n" +
-                    "Content-Type: text/html; charset=utf-8\r\n\r\n";
+            String defaultResponse = "HTTP/1.1 101 Switching Protocols\r\n" +
+                    "Upgrade: websocket\r\n" +
+                    "Connection: Upgrade\r\n" +
+                    "Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\r\n" +
+                    "Sec-WebSocket-Protocol: chat\r\n\r\n";
             sout.write(defaultResponse.getBytes());
             sout.flush();
             //sout.write("kek".getBytes());
