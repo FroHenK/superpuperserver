@@ -128,7 +128,11 @@ public class user_process {
 
 
         if (sessionsCollection.count(new Document("auth_token", authToken)) != 0) {
-            MongoCursor<Document> cursor = usersCollection.find(new Document("auth_token", authToken)).iterator();
+            MongoCursor<Document> cursor = sessionsCollection.find(new Document("auth_token", authToken)).iterator();
+            Document session = cursor.next();
+            cursor.close();
+            cursor = usersCollection.find(new Document("_id", session.getObjectId("user_id"))).iterator();
+
             Document user = cursor.next();
             String username = user.getString("username");
             sessionsCollection.insertOne(new Document("user_id", user.getObjectId("_id")).append("auth_token", authToken));
