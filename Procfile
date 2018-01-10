@@ -1,1 +1,1 @@
-web: java -jar server.jar
+web: java -jar server.jar mem.sirius.example.java.App
