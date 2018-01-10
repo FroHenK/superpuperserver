@@ -1,5 +1,7 @@
 package mem.sirius.example.java;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -32,39 +34,39 @@ public class socket_connection extends Thread {
                     "Content-Language: ru\r\n" +
                     "Content-Type: text/html; charset=utf-8\r\n\r\n";
             sout.write(defaultResponse.getBytes());
+            sout.flush();
+            //sout.write("kek".getBytes());
+            //sout.close();
 
-            sout.write("kek".getBytes());
-            sout.close();
+            DataInputStream in = new DataInputStream(sin);
+            DataOutputStream out = new DataOutputStream(sout);
 
-//            DataInputStream in = new DataInputStream(sin);
-//            DataOutputStream out = new DataOutputStream(sout);
-//
-//            String line = null;
-//            while (true) {
-//                try {
-//                    line = in.readUTF();
-//                } catch (Exception x) {
-//                    socket.close();
-//                    break;
-//                }
-//                Request request = new Request(line);
-//                if (request.links.get("type").equals("get_list")) {
-//                    get_list response = new get_list(request);
-//                    String ans = response.getResponse().toString();
-//                    if (ans != null) {
-//                        System.out.println("New answer for getlist " + ans);
-//                        System.out.println();
-//                        out.writeUTF(ans);
-//                        out.flush();
-//                    }
-//                    continue;
-//                }
-//                if (request.links.get("type").equals("close")) {
-//                    System.out.println("User decide to close");
-//                    socket.close();
-//                    break;
-//                }
-//            }
+            String line = null;
+            while (true) {
+                try {
+                    line = in.readUTF();
+                } catch (Exception x) {
+                    socket.close();
+                    break;
+                }
+                Request request = new Request(line);
+                if (request.links.get("type").equals("get_list")) {
+                    get_list response = new get_list(request);
+                    String ans = response.getResponse().toString();
+                    if (ans != null) {
+                        System.out.println("New answer for getlist " + ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                    continue;
+                }
+                if (request.links.get("type").equals("close")) {
+                    System.out.println("User decide to close");
+                    socket.close();
+                    break;
+                }
+            }
         } catch (Exception x) {
             x.printStackTrace();
         }
