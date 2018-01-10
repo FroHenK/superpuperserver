@@ -28,7 +28,7 @@ public class socket_connection extends Thread {
                 data.add(i);
                 if (data.size() >= 4 && data.get(data.size() - 1) == '\n' && data.get(data.size() - 2) == '\r' && data.get(data.size() - 3) == '\n' && data.get(data.size() - 4) == '\r')
                     break;
-                httpRequest.append(i);
+                httpRequest.append((char) i);
             }
 
             String defaultResponse = "HTTP/1.1 200 OK\r\n" +
