@@ -22,13 +22,13 @@ public class socket_connection extends Thread {
             InputStream sin = socket.getInputStream();
             OutputStream sout = socket.getOutputStream();
             ArrayList<Integer> data = new ArrayList<Integer>();
-            StringBuilder httpRequest = new StringBuilder();
+            String httpRequest = "";
             while (true) {
                 int i = sin.read();
                 data.add(i);
                 if (data.size() >= 4 && data.get(data.size() - 1) == '\n' && data.get(data.size() - 2) == '\r' && data.get(data.size() - 3) == '\n' && data.get(data.size() - 4) == '\r')
                     break;
-                httpRequest.append((char) i);
+                httpRequest += (char) i;
             }
 
             String defaultResponse = "HTTP/1.1 200 OK\r\n" +
