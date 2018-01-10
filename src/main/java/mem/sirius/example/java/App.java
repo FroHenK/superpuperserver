@@ -12,6 +12,7 @@ public class App {
     public static final String mem_dir = "memes";
 
     public static void main(String[] args) {
+        System.out.println("Version: 1");
         port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "5000");
         System.out.println("Port is :" + port);
         ServerSocket ss = null;
