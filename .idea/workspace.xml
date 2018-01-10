@@ -9,6 +9,9 @@
     <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Deploy">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/server_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/server_jar.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/server.jar" afterPath="$PROJECT_DIR$/server.jar" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/App.class" afterPath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/App.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/socket_connection.class" afterPath="$PROJECT_DIR$/target/classes/mem/sirius/example/java/socket_connection.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,8 +30,8 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="14" column="52" lean-forward="false" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+            <state relative-caret-position="300">
+              <caret line="21" column="32" lean-forward="false" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -456,14 +459,7 @@
       <workItem from="1515502732659" duration="1726000" />
       <workItem from="1515504656556" duration="13000" />
       <workItem from="1515565312739" duration="1296000" />
-      <workItem from="1515566648370" duration="8347000" />
-    </task>
-    <task id="LOCAL-00010" summary="Deploy">
-      <created>1515496303049</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1515496303049</updated>
+      <workItem from="1515566648370" duration="8452000" />
     </task>
     <task id="LOCAL-00011" summary="Heroku">
       <created>1515496652282</created>
@@ -801,7 +797,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515575108021</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Deploy">
+      <created>1515575140664</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1515575140664</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -813,7 +816,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71357000" />
+    <option name="totallyTimeSpent" value="71462000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1359,8 +1362,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="52" lean-forward="false" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+        <state relative-caret-position="300">
+          <caret line="21" column="32" lean-forward="false" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
           <folding />
         </state>
       </provider>
