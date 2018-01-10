@@ -1,11 +1,11 @@
 package mem.sirius.example.java;
 
-import java.io.File;
+import mem.sirius.example.java.database.MemeAppDatabase;
+
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import static mem.sirius.example.java.App.mem_dir;
-import static mem.sirius.example.java.App.myip;
+import static mem.sirius.example.java.App.memeAppDatabase;
 
 public class get_list {
     private TreeMap<String, String> links = new TreeMap<String, String>();
@@ -13,11 +13,16 @@ public class get_list {
         links = a.links;
     }
     public Response getResponse(){
-        parse_fol dir = new parse_fol();
-        File memes = new File(mem_dir);
-        dir.processFilesFromFolder(memes);
         TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
-        a.put("links", dir.getLinksAccepted(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")), myip));
+        ArrayList<MemeAppDatabase.Meme> memes = memeAppDatabase.memesList(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")));
+        ArrayList<String> urls = new ArrayList<String>();
+        for (MemeAppDatabase.Meme meme :
+                memes) {
+            urls.add(meme.getUrl());
+        }
+
+
+        a.put("links", urls);
         return (new Response(a));
     }
 }

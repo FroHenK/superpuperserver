@@ -14,6 +14,7 @@ public class App {
     private static final String MONGO_USER = "MONGO_USER";
     private static final String MONGO_PASSWORD = "MONGO_PASSWORD";
     private static final String MONGO_SALT = "MONGO_SALT";
+    public static final String DATABASE = "memes";
 
     public static int port = 0;
     public static final String myip = "http://azatismagilov00.siteme.org/ac/";
@@ -22,7 +23,7 @@ public class App {
     private static String mongo_password;
     private static String mongo_salt;
     private static String mongo_user;
-    private static MemeAppDatabase memeAppDatabase;
+    public static MemeAppDatabase memeAppDatabase;
 
     public static void main(String[] args) {
         System.out.println("Version: 2 WebSocket Try");
@@ -33,7 +34,7 @@ public class App {
         mongo_password = (System.getenv(MONGO_PASSWORD) != null ? System.getenv(MONGO_PASSWORD) : "password");
         mongo_salt = (System.getenv(MONGO_SALT) != null ? System.getenv(MONGO_SALT) : "salt_salt_salt");
 
-        memeAppDatabase = new MemeAppDatabase(mongo_server, mongo_user, mongo_password, mongo_salt);
+        memeAppDatabase = new MemeAppDatabase(mongo_server, mongo_user, mongo_password, mongo_salt, DATABASE);
 
 
         System.out.println("Port is :" + port);
