@@ -15,6 +15,21 @@ public class MemeAppDatabase {
     private final String password;
     private final String salt;
     private final MongoCollection<Document> memesCollection;
+    private final MongoCollection<Document> usersCollection;
+    private final MongoCollection<Document> sessionsCollection;
+
+    public MongoCollection<Document> getUsersCollection() {
+        return usersCollection;
+    }
+
+    public MongoCollection<Document> getMemesCollection() {
+        return memesCollection;
+    }
+
+    public MongoCollection<Document> getSessionsCollection() {
+        return sessionsCollection;
+    }
+
     private MongoClient mongoClient;
     private MongoDatabase mongoDatabase;
 
@@ -27,6 +42,8 @@ public class MemeAppDatabase {
         mongoClient = new MongoClient(new MongoClientURI(String.format("mongodb+srv://%s:%s@%s/test", user, password, server)));
         mongoDatabase = mongoClient.getDatabase(database);
         memesCollection = mongoDatabase.getCollection("memes");
+        usersCollection = mongoDatabase.getCollection("users");
+        sessionsCollection = mongoDatabase.getCollection("sessions");
     }
 
     public ArrayList<Meme> memesList(Integer last, Integer num) {
@@ -38,34 +55,5 @@ public class MemeAppDatabase {
         }
         cursor.close();
         return memesList;
-    }
-
-
-    public class Meme extends Documentable {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public Meme(String url) {
-            this.url = url;
-        }
-
-        public Meme(Document document) {
-            super(document);
-        }
-
-        public Document toDocument() {
-            return new Document().append("url", url);
-        }
-
-        public void parseFromDocument(Document document) {
-            url = document.getString("url");
-        }
     }
 }

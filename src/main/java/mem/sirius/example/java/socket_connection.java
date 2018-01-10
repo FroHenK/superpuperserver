@@ -67,6 +67,41 @@ public class socket_connection extends Thread {
                     }
                     continue;
                 }
+                if (request.links.get("type").equals("vk_register")) {
+                    user_process response = new user_process(request);
+                    String ans = response.vkLoginOrCreate().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for vk_register %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+                if (request.links.get("type").equals("logout_auth_token")) {
+                    user_process response = new user_process(request);
+                    String ans = response.killSession().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for logout_auth_token %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+                if (request.links.get("type").equals("validate_auth_token")) {
+                    user_process response = new user_process(request);
+                    String ans = response.validateSession().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for validate_auth_token %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+
+
                 if (request.links.get("type").equals("close")) {
                     System.out.println("User decide to close");
                     socket.close();

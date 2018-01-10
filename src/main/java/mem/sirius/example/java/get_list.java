@@ -1,6 +1,6 @@
 package mem.sirius.example.java;
 
-import mem.sirius.example.java.database.MemeAppDatabase;
+import mem.sirius.example.java.database.Meme;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -14,9 +14,9 @@ public class get_list {
     }
     public Response getResponse(){
         TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
-        ArrayList<MemeAppDatabase.Meme> memes = memeAppDatabase.memesList(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")));
+        ArrayList<Meme> memes = memeAppDatabase.memesList(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")));
         ArrayList<String> urls = new ArrayList<String>();
-        for (MemeAppDatabase.Meme meme :
+        for (Meme meme :
                 memes) {
             urls.add(meme.getUrl());
         }
