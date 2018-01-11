@@ -135,7 +135,6 @@ public class user_process {
 
             Document user = cursor.next();
             String username = user.getString("username");
-            sessionsCollection.insertOne(new Document("user_id", user.getObjectId("_id")).append("auth_token", authToken));
 
             {
                 ArrayList<String> value = new ArrayList<String>();
