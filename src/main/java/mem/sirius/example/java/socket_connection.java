@@ -115,6 +115,17 @@ public class socket_connection extends Thread {
                     }
                 }
 
+                if (request.links.get("type").equals("meme_upload")) {
+                    meme_upload response = new meme_upload(request, sin);
+                    String ans = response.getResponse().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for meme_upload %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
 
                 if (request.links.get("type").equals("close")) {
                     System.out.println("User decide to close");
