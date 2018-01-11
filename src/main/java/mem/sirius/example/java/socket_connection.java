@@ -1,19 +1,24 @@
 package mem.sirius.example.java;
 
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import org.bson.types.BSONTimestamp;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class socket_connection extends Thread {
     private Socket socket;
+    private MongoCollection<Document> visitsCollection;
 
     public socket_connection(Socket ss) {
         socket = ss;
+        visitsCollection = App.memeAppDatabase.getVisitsCollection();
     }
 
     public void run() {
@@ -32,7 +37,14 @@ public class socket_connection extends Thread {
                 httpRequest += (char) i;
             }
 
-            System.out.println(Arrays.toString(httpRequest.split("\r\n")));
+            for (String string :
+                    (httpRequest.split("\r\n"))) {
+                String prefix = "X-Forwarded-For:";
+                if (string.startsWith(prefix)) {
+                    String ip = string.substring(prefix.length()).trim();
+                    visitsCollection.insertOne(new Document("ip", ip).append("time", new BSONTimestamp()));
+                }
+            }
 
             System.out.println(httpRequest);
 

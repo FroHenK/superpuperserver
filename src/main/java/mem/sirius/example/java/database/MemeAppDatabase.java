@@ -17,6 +17,7 @@ public class MemeAppDatabase {
     private final MongoCollection<Document> memesCollection;
     private final MongoCollection<Document> usersCollection;
     private final MongoCollection<Document> sessionsCollection;
+    private final MongoCollection<Document> visitsCollection;
 
     public MongoCollection<Document> getUsersCollection() {
         return usersCollection;
@@ -28,6 +29,10 @@ public class MemeAppDatabase {
 
     public MongoCollection<Document> getSessionsCollection() {
         return sessionsCollection;
+    }
+
+    public MongoCollection<Document> getVisitsCollection() {
+        return visitsCollection;
     }
 
     private MongoClient mongoClient;
@@ -44,6 +49,7 @@ public class MemeAppDatabase {
         memesCollection = mongoDatabase.getCollection("memes");
         usersCollection = mongoDatabase.getCollection("users");
         sessionsCollection = mongoDatabase.getCollection("sessions");
+        visitsCollection = mongoDatabase.getCollection("visits");
     }
 
     public ArrayList<Meme> memesList(Integer last, Integer num) {
