@@ -5,6 +5,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.sun.istack.internal.Nullable;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -33,6 +34,20 @@ public class MemeAppDatabase {
 
     public MongoCollection<Document> getVisitsCollection() {
         return visitsCollection;
+    }
+
+    @Nullable
+    public Document getUserByAuthToken(String authToken) {
+        if (sessionsCollection.count(new Document("auth_token", authToken)) != 0) {
+            MongoCursor<Document> cursor = sessionsCollection.find(new Document("auth_token", authToken)).iterator();
+            Document session = cursor.next();
+            cursor.close();
+            cursor = usersCollection.find(new Document("_id", session.getObjectId("user_id"))).iterator();
+            Document user = cursor.next();
+            cursor.close();
+            return user;
+        }
+        return null;
     }
 
     private MongoClient mongoClient;
