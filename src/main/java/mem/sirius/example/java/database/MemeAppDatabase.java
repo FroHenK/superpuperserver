@@ -5,7 +5,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.sun.istack.internal.Nullable;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class MemeAppDatabase {
         return visitsCollection;
     }
 
-    @Nullable
     public Document getUserByAuthToken(String authToken) {
         if (sessionsCollection.count(new Document("auth_token", authToken)) != 0) {
             MongoCursor<Document> cursor = sessionsCollection.find(new Document("auth_token", authToken)).iterator();
