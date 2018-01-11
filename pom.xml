@@ -41,6 +41,11 @@
             <artifactId>commons-net</artifactId>
             <version>3.6</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.17</version>
+        </dependency>
     </dependencies>
 
 </project>

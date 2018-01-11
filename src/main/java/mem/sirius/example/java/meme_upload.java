@@ -1,13 +1,17 @@
 package mem.sirius.example.java;
 
 import com.mongodb.client.MongoCollection;
+import mem.sirius.example.java.database.Meme;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.tika.mime.MimeTypeException;
+import org.apache.tika.mime.MimeTypes;
 import org.bson.Document;
+import org.bson.types.BSONTimestamp;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -45,37 +49,56 @@ public class meme_upload {
             return (new Response(a));
         }
 
+        System.out.printf("Accepting image with content length: %d from %s%n", contentLength, user.getString("username"));
+
         FTPClient ftpClient = new FTPClient();
         String filename = new RandomString().nextString();
-
+        String extension = null;
         try {
+
             ftpClient.connect(App.ftp_host, App.ftp_port);
             ftpClient.login(App.ftp_user, App.ftp_password);
-            OutputStream storeFileStream = ftpClient.storeFileStream(filename);
             byte image[] = new byte[contentLength];
             int current = 0;
             while (current < contentLength) {
-                int read = inputStream.read(image, current, FILE_PART_LENGTH);
-                storeFileStream.write(image, current, read);
+                // I have no idea why I implemented this this particular way
+                // ¯\_(ツ)_/¯
+                int read = inputStream.read(image, current, Math.min(FILE_PART_LENGTH, contentLength - current));
                 current += read;
             }
 
-            ftpClient.completePendingCommand();
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.storeFile(filename, new ByteArrayInputStream(image));
 
-            System.out.println("Filetype: " + URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image)));
 
-
+            String mime = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image));
+            System.out.println("Filetype: " + mime);
+            MimeTypes mimeTypes = MimeTypes.getDefaultMimeTypes();
+            if (mime.contains("image")) {
+                extension = mimeTypes.forName(mime).getExtension();
+                ftpClient.rename(filename, filename + extension);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-
             a.put("status", new OneElementArrayList<String>("fail"));
             a.put("message", new OneElementArrayList<String>("io_exception"));
             return (new Response(a));
-
+        } catch (MimeTypeException e) {
+            e.printStackTrace();
         }
 
+        if (extension == null) {
+            a.put("status", new OneElementArrayList<String>("fail"));
+            a.put("message", new OneElementArrayList<String>("unknown_extension"));
+            return (new Response(a));
+        }
+
+
         a.put("status", new OneElementArrayList<String>("success"));
-        a.put("link", new OneElementArrayList<String>(URL_PREFIX + filename));
+        String memeUrl = URL_PREFIX + filename + extension;
+        a.put("link", new OneElementArrayList<String>(memeUrl));
+
+        memesCollection.insertOne(new Meme(memeUrl, new BSONTimestamp()).toDocument());
 
         //status(success,fail), link
         return (new Response(a));

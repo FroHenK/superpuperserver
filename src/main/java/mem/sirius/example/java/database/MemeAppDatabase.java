@@ -69,7 +69,7 @@ public class MemeAppDatabase {
 
     public ArrayList<Meme> memesList(Integer last, Integer num) {
         ArrayList<Meme> memesList = new ArrayList<Meme>();
-        MongoCursor<Document> cursor = memesCollection.find().skip(last).limit(num).iterator();
+        MongoCursor<Document> cursor = memesCollection.find().sort(new Document("time", -1)).skip(last).limit(num).iterator();
         while (cursor.hasNext()) {
             Meme meme = new Meme(cursor.next());
             memesList.add(meme);
