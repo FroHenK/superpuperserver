@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class socket_connection extends Thread {
@@ -30,6 +31,8 @@ public class socket_connection extends Thread {
                     break;
                 httpRequest += (char) i;
             }
+
+            System.out.println(Arrays.toString(httpRequest.split("\r\n")));
 
             System.out.println(httpRequest);
 
@@ -99,7 +102,6 @@ public class socket_connection extends Thread {
                         out.flush();
                     }
                 }
-
 
 
                 if (request.links.get("type").equals("close")) {
