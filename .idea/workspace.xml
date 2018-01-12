@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Deploy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/server.jar" afterPath="$PROJECT_DIR$/server.jar" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/meme_upload.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/meme_upload.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -65,8 +64,8 @@
       <file leaf-file-name="meme_upload.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/meme_upload.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="70" column="46" lean-forward="false" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="46" />
+            <state relative-caret-position="210">
+              <caret line="72" column="61" lean-forward="false" selection-start-line="72" selection-start-column="61" selection-end-line="72" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -207,7 +206,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="8" />
     <option name="width" value="1316" />
     <option name="height" value="692" />
@@ -532,14 +531,7 @@
       <workItem from="1515694102348" duration="149000" />
       <workItem from="1515694287953" duration="192000" />
       <workItem from="1515694562290" duration="7545000" />
-      <workItem from="1515735862238" duration="1882000" />
-    </task>
-    <task id="LOCAL-00035" summary="Fixed server">
-      <created>1515567776594</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1515567776595</updated>
+      <workItem from="1515735862238" duration="2019000" />
     </task>
     <task id="LOCAL-00036" summary="Deploy">
       <created>1515567795027</created>
@@ -877,7 +869,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515737677100</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Deploy">
+      <created>1515737754966</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1515737754966</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -889,7 +888,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115477000" />
+    <option name="totallyTimeSpent" value="115614000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -901,7 +900,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="8" width="1366" height="741" extended-state="7" />
+    <frame x="0" y="8" width="1366" height="741" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32815734" sideWeight="0.49137932" order="6" side_tool="false" content_ui="tabs" />
@@ -910,7 +910,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30194804" sideWeight="0.3628788" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27597404" sideWeight="0.6371212" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27597404" sideWeight="0.6371212" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25811687" sideWeight="0.53712124" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23701298" sideWeight="0.7151515" order="2" side_tool="false" content_ui="tabs" />
@@ -1393,8 +1393,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/meme_upload.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="70" column="46" lean-forward="false" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="46" />
+        <state relative-caret-position="210">
+          <caret line="72" column="61" lean-forward="false" selection-start-line="72" selection-start-column="61" selection-end-line="72" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -67,8 +67,10 @@ public class meme_upload {
             byte image[] = new byte[contentLength];
             int current = 0;
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            System.out.println("Uploading file to: " + filename);
             OutputStream storeFileStream = ftpClient.storeFileStream(filename);
-            System.out.println(storeFileStream);
+
+            System.out.println(ftpClient.getReplyString() + ", " + ftpClient.getReplyCode() + ", " + storeFileStream);
             while (current < contentLength) {
                 // I have no idea why I implemented this this particular way
                 // ¯\_(ツ)_/¯
