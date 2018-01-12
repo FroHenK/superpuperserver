@@ -8,6 +8,7 @@ public class Meme extends Documentable {
     private String url;
     private BSONTimestamp time;
     private ObjectId authorId;
+    private ObjectId id;
 
     public BSONTimestamp getTime() {
         return time;
@@ -56,6 +57,8 @@ public class Meme extends Documentable {
             document.append("time", time);
         if (authorId != null)
             document.append("author_id", authorId);
+        if (id != null)
+            document.append("_id", id);
 
         return document;
     }
@@ -68,7 +71,15 @@ public class Meme extends Documentable {
         if (document.containsKey("author_id")) {
             authorId = document.get("author_id", ObjectId.class);
         }
+        if (document.containsKey("_id")) {
+            id = document.get("_id", ObjectId.class);
+        }
 
 
     }
+
+    public ObjectId getId() {
+        return id;
+    }
+
 }
