@@ -57,9 +57,6 @@ public class meme_upload {
         String extension = null;
         try {
 
-            System.out.println(App.ftp_port);
-            System.out.println(App.ftp_user);
-            System.out.println(App.ftp_password);
             ftpClient.connect(App.ftp_host, App.ftp_port);
             ftpClient.enterLocalPassiveMode();
             boolean login = ftpClient.login(App.ftp_user, App.ftp_password);
@@ -71,7 +68,7 @@ public class meme_upload {
             System.out.println("Uploading file to: " + filename);
             OutputStream storeFileStream = ftpClient.storeFileStream(filename);
 
-            System.out.println(ftpClient.getReplyString() + ", " + ftpClient.getReplyCode() + ", " + storeFileStream);
+            System.out.println("FTP Reply: " + ftpClient.getReplyString().trim() + ":" + ftpClient.getReplyCode());
             while (current < contentLength) {
                 // I have no idea why I implemented this this particular way
                 // ¯\_(ツ)_/¯
