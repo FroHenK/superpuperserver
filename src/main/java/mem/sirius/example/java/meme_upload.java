@@ -12,6 +12,7 @@ import org.bson.types.BSONTimestamp;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -68,16 +69,19 @@ public class meme_upload {
 
             byte image[] = new byte[contentLength];
             int current = 0;
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            OutputStream storeFileStream = ftpClient.storeFileStream(filename);
             while (current < contentLength) {
                 // I have no idea why I implemented this this particular way
                 // ¯\_(ツ)_/¯
                 int read = inputStream.read(image, current, Math.min(FILE_PART_LENGTH, contentLength - current));
+                storeFileStream.write(image, current, read);
+                storeFileStream.flush();
                 current += read;
             }
-
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            ftpClient.storeFile(filename, new ByteArrayInputStream(image));
-
+            storeFileStream.close();
+            ftpClient.completePendingCommand();
 
             String mime = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image));
             System.out.println("Filetype: " + mime);
