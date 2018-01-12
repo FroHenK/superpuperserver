@@ -110,7 +110,7 @@ public class meme_upload {
         String memeUrl = URL_PREFIX + filename + extension;
         a.put("link", new OneElementArrayList<String>(memeUrl));
 
-        memesCollection.insertOne(new Meme(memeUrl, new BSONTimestamp()).toDocument());
+        memesCollection.insertOne(new Meme(memeUrl, new BSONTimestamp()).setAuthorId(user.getObjectId("_id")).toDocument());
 
         //status(success,fail), link
         return (new Response(a));
