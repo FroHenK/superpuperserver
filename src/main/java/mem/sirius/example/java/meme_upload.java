@@ -57,25 +57,24 @@ public class meme_upload {
         String extension = null;
         try {
 
-            System.out.println("FTP HOST: " + App.ftp_host);
             System.out.println(App.ftp_port);
             System.out.println(App.ftp_user);
             System.out.println(App.ftp_password);
             ftpClient.connect(App.ftp_host, App.ftp_port);
-            ftpClient.login(App.ftp_user, App.ftp_password);
-
-            System.out.println("FTP Connected");
-
+            boolean login = ftpClient.login(App.ftp_user, App.ftp_password);
+            System.out.println(login ? "Successful login!" : "Login failed!");
 
             byte image[] = new byte[contentLength];
             int current = 0;
-
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
             OutputStream storeFileStream = ftpClient.storeFileStream(filename);
             while (current < contentLength) {
                 // I have no idea why I implemented this this particular way
                 // ¯\_(ツ)_/¯
+
+                System.out.println(image + ", " + current + ", " + contentLength);
                 int read = inputStream.read(image, current, Math.min(FILE_PART_LENGTH, contentLength - current));
+                System.out.println("read " + read);
                 storeFileStream.write(image, current, read);
                 storeFileStream.flush();
                 current += read;
