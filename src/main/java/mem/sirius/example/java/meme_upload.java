@@ -56,8 +56,16 @@ public class meme_upload {
         String extension = null;
         try {
 
+            System.out.println("FTP HOST: " + App.ftp_host);
+            System.out.println(App.ftp_port);
+            System.out.println(App.ftp_user);
+            System.out.println(App.ftp_password);
             ftpClient.connect(App.ftp_host, App.ftp_port);
             ftpClient.login(App.ftp_user, App.ftp_password);
+
+            System.out.println("FTP Connected");
+
+
             byte image[] = new byte[contentLength];
             int current = 0;
             while (current < contentLength) {
