@@ -53,10 +53,10 @@ public class meme_upload {
         System.out.printf("Accepting image with content length: %d from %s%n", contentLength, user.getString("username"));
 
         FTPClient ftpClient = new FTPClient();
+        ///Name for file
         String filename = new RandomString().nextString();
         String extension = null;
         try {
-
             ftpClient.connect(App.ftp_host, App.ftp_port);
             ftpClient.enterLocalPassiveMode();
             boolean login = ftpClient.login(App.ftp_user, App.ftp_password);

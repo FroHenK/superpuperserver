@@ -10,36 +10,13 @@ public class User extends Documentable {
     private String username;
 
 
-    public User(Document document) {
-        super(document);
-    }
-
-    public User() {
-    }
-
-    public Document toDocument() {
-        Document document = new Document();
-        if (id != null)
-            document.append("_id", id);
-        if (vkUserId != null)
-            document.append("vk_user_id", vkUserId);
-        if (username != null)
-            document.append("username", username);
-
-        return document;
-    }
-
-    public void parseFromDocument(Document document) {
-        if (document.containsKey("vk_user_id"))
-            vkUserId = document.getInteger("vk_user_id");
-        id = document.getObjectId("_id");
-        if (document.containsKey("username"))
-            username = document.getString("username");
-
-    }
-
     public ObjectId getId() {
         return id;
+    }
+
+    public User setId(ObjectId id) {
+        this.id = id;
+        return this;
     }
 
     public Integer getVkUserId() {
@@ -59,4 +36,39 @@ public class User extends Documentable {
         this.username = username;
         return this;
     }
+
+    public User(Document document) {
+        super(document);
+    }
+
+    public User() {
+    }
+
+    public Document toDocument() {
+        Document document = new Document();
+        if (id != null)
+            document.append("_id", id);
+
+        if (vkUserId != null)
+            document.append("vk_user_id", vkUserId);
+
+        if (username != null)
+            document.append("username", username);
+
+        return document;
+    }
+
+    public void parseFromDocument(Document document) {
+        if (document.containsKey("_id"))
+            id = document.getObjectId("_id");
+
+        if (document.containsKey("vk_user_id"))
+            vkUserId = document.getInteger("vk_user_id");
+
+        if (document.containsKey("username"))
+            username = document.getString("username");
+
+    }
+
+
 }
