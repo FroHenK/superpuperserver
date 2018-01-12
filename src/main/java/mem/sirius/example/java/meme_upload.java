@@ -61,6 +61,7 @@ public class meme_upload {
             System.out.println(App.ftp_user);
             System.out.println(App.ftp_password);
             ftpClient.connect(App.ftp_host, App.ftp_port);
+            ftpClient.enterLocalPassiveMode();
             boolean login = ftpClient.login(App.ftp_user, App.ftp_password);
             System.out.println(login ? "Successful login!" : "Login failed!");
 
