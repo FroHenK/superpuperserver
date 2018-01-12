@@ -6,8 +6,8 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
+import org.bson.BsonTimestamp;
 import org.bson.Document;
-import org.bson.types.BSONTimestamp;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.TreeMap;
+
 
 public class meme_upload {
 
@@ -110,7 +111,7 @@ public class meme_upload {
         String memeUrl = URL_PREFIX + filename + extension;
         a.put("link", new OneElementArrayList<String>(memeUrl));
 
-        memesCollection.insertOne(new Meme(memeUrl, new BSONTimestamp()).setAuthorId(user.getObjectId("_id")).toDocument());
+        memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setAuthorId(user.getObjectId("_id")).toDocument());
 
         //status(success,fail), link
         return (new Response(a));

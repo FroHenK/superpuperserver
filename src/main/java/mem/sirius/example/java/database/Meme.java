@@ -1,12 +1,12 @@
 package mem.sirius.example.java.database;
 
+import org.bson.BsonTimestamp;
 import org.bson.Document;
-import org.bson.types.BSONTimestamp;
 import org.bson.types.ObjectId;
 
 public class Meme extends Documentable {
     private String url;
-    private BSONTimestamp time;
+    private BsonTimestamp time;
     private ObjectId authorId;
     private ObjectId id;
 
@@ -15,7 +15,7 @@ public class Meme extends Documentable {
         return id;
     }
 
-    public BSONTimestamp getTime() {
+    public BsonTimestamp getTime() {
         return time;
     }
 
@@ -27,7 +27,7 @@ public class Meme extends Documentable {
         return url;
     }
 
-    public Meme setTime(BSONTimestamp time) {
+    public Meme setTime(BsonTimestamp time) {
         this.time = time;
         return this;
     }
@@ -46,7 +46,7 @@ public class Meme extends Documentable {
         this.url = url;
     }
 
-    public Meme(String url, BSONTimestamp time) {
+    public Meme(String url, BsonTimestamp time) {
         this.url = url;
         this.time = time;
     }
@@ -78,7 +78,7 @@ public class Meme extends Documentable {
             url = document.getString("url");
 
         if (document.containsKey("time"))
-            time = document.get("time", BSONTimestamp.class);
+            time = document.get("time", BsonTimestamp.class);
 
         if (document.containsKey("author_id"))
             authorId = document.get("author_id", ObjectId.class);
