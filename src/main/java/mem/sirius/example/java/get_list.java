@@ -13,16 +13,16 @@ public class get_list {
         links = a.links;
     }
     public Response getResponse(){
-        TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
+        TreeMap<String, Object> a = new TreeMap<String, Object>();
         ArrayList<Meme> memes = memeAppDatabase.memesList(Integer.parseInt(links.get("last")), Integer.parseInt(links.get("count")));
-        ArrayList<String> urls = new ArrayList<String>();
+        /*ArrayList<String> urls = new ArrayList<String>();
         for (Meme meme :
                 memes) {
             urls.add(meme.getUrl());
-        }
+        }*/
 
 
-        a.put("links", urls);
+        a.put("links", memes);
         return (new Response(a));
     }
 }
