@@ -82,11 +82,46 @@ public class socket_connection extends Thread {
                     }
                     continue;
                 }
+
                 if (request.links.get("type").equals("vk_register")) {
                     user_process response = new user_process(request);
                     String ans = response.vkLoginOrCreate().toString();
                     if (ans != null) {
                         System.out.printf("new answer for vk_register %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+                if (request.links.get("type").equals("get_comments")) {
+                    comment_process response = new comment_process(request);
+                    String ans = response.getComments().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for get_comments %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+                if (request.links.get("type").equals("post_comment")) {
+                    comment_process response = new comment_process(request);
+                    String ans = response.postComment().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for post_comment %s%n", ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                }
+
+
+                if (request.links.get("type").equals("meme_rating")) {
+                    meme_rating response = new meme_rating(request);
+                    String ans = response.getResponse().toString();
+                    if (ans != null) {
+                        System.out.printf("new answer for meme_rating ", request.links.get("action"), "%s%n", ans);
                         System.out.println();
                         out.writeUTF(ans);
                         out.flush();

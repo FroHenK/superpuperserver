@@ -3,15 +3,34 @@ package mem.sirius.example.java.database;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User extends Documentable {
 
     private ObjectId id;
     private Integer vkUserId;
     private String username;
-
+    private Map<String, Integer> isLiked = new HashMap<>();
 
     public ObjectId getId() {
         return id;
+    }
+
+    public Integer getVkUserId() {
+        return vkUserId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public HashMap<String, Integer> getIsLiked() {
+        return (HashMap<String, Integer>) isLiked;
+    }
+
+    public Integer getIsPostLiked(ObjectId post) {
+        return this.isLiked.getOrDefault(post.toHexString(), 0);
     }
 
     public User setId(ObjectId id) {
@@ -19,22 +38,23 @@ public class User extends Documentable {
         return this;
     }
 
-    public Integer getVkUserId() {
-        return vkUserId;
-    }
-
     public User setVkUserId(Integer vkUserId) {
         this.vkUserId = vkUserId;
         return this;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public User setUsername(String username) {
         this.username = username;
         return this;
+    }
+
+    public User setIsLiked(HashMap<String, Integer> isLiked) {
+        this.isLiked = isLiked;
+        return this;
+    }
+
+    public void setIsPostLiked(ObjectId post, Integer new_value) {
+        this.isLiked.put(post.toHexString(), new_value);
     }
 
     public User(Document document) {
@@ -55,6 +75,12 @@ public class User extends Documentable {
         if (username != null)
             document.append("username", username);
 
+        if (username != null)
+            document.append("username", username);
+
+        if (isLiked != null && !isLiked.isEmpty())
+            document.append("is_liked", isLiked);
+
         return document;
     }
 
@@ -67,6 +93,9 @@ public class User extends Documentable {
 
         if (document.containsKey("username"))
             username = document.getString("username");
+
+        if (document.containsKey("is_liked"))
+            isLiked = document.get("is_liked", Map.class);
 
     }
 

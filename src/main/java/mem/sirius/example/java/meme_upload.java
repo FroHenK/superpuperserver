@@ -2,6 +2,7 @@ package mem.sirius.example.java;
 
 import com.mongodb.client.MongoCollection;
 import mem.sirius.example.java.database.Meme;
+import mem.sirius.example.java.database.User;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.tika.mime.MimeTypeException;
@@ -38,7 +39,7 @@ public class meme_upload {
         Integer contentLength = Integer.valueOf(links.get("content_length"));
         MongoCollection<Document> memesCollection = App.memeAppDatabase.getMemesCollection();
 
-        Document user = App.memeAppDatabase.getUserByAuthToken(authToken);
+        User user = App.memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
             a.put("status", new OneElementArrayList<String>("fail"));
             a.put("message", new OneElementArrayList<String>("invalid_auth_token"));
@@ -51,7 +52,7 @@ public class meme_upload {
             return (new Response(a));
         }
 
-        System.out.printf("Accepting image with content length: %d from %s%n", contentLength, user.getString("username"));
+        System.out.printf("Accepting image with content length: %d from %s%n", contentLength, user.getUsername());
 
         FTPClient ftpClient = new FTPClient();
         ///Name for file
@@ -111,7 +112,7 @@ public class meme_upload {
         String memeUrl = URL_PREFIX + filename + extension;
         a.put("link", new OneElementArrayList<String>(memeUrl));
 
-        memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setAuthorId(user.getObjectId("_id")).toDocument());
+        memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setAuthorId(user.getId()).toDocument());
 
         //status(success,fail), link
         return (new Response(a));

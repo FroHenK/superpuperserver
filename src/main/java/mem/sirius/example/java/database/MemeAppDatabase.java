@@ -5,9 +5,13 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MemeAppDatabase {
     private final String server;
@@ -18,6 +22,11 @@ public class MemeAppDatabase {
     private final MongoCollection<Document> usersCollection;
     private final MongoCollection<Document> sessionsCollection;
     private final MongoCollection<Document> visitsCollection;
+    private final MongoCollection<Document> commentsCollection;
+
+    public MongoCollection<Document> getCommentsCollection() {
+        return commentsCollection;
+    }
 
     public MongoCollection<Document> getUsersCollection() {
         return usersCollection;
@@ -35,7 +44,7 @@ public class MemeAppDatabase {
         return visitsCollection;
     }
 
-    public Document getUserByAuthToken(String authToken) {
+    public User getUserByAuthToken(String authToken) {
         if (sessionsCollection.count(new Document("auth_token", authToken)) != 0) {
             MongoCursor<Document> cursor = sessionsCollection.find(new Document("auth_token", authToken)).iterator();
             Document session = cursor.next();
@@ -43,7 +52,7 @@ public class MemeAppDatabase {
             cursor = usersCollection.find(new Document("_id", session.getObjectId("user_id"))).iterator();
             Document user = cursor.next();
             cursor.close();
-            return user;
+            return new User(user);
         }
         return null;
     }
@@ -63,6 +72,7 @@ public class MemeAppDatabase {
         usersCollection = mongoDatabase.getCollection("users");
         sessionsCollection = mongoDatabase.getCollection("sessions");
         visitsCollection = mongoDatabase.getCollection("visits");
+        commentsCollection = mongoDatabase.getCollection("comments");
     }
 
     public ArrayList<Meme> memesList(Integer last, Integer num) {
@@ -74,5 +84,24 @@ public class MemeAppDatabase {
         }
         cursor.close();
         return memesList;
+    }
+
+    public ArrayList<Comment> commentsList(ObjectId memeId) {
+        ArrayList<Comment> commentsList = new ArrayList<Comment>();
+        for (Document document : commentsCollection.find(new Comment().setMemeId(memeId).toDocument()).sort(new Document("time", -1))) {
+            commentsList.add(new Comment(document));
+        }
+        return commentsList;
+    }
+
+    public Map<ObjectId, String> assignUsernamesToIds(Map<ObjectId, String> map) {
+        Bson fieldsProjection = Projections.fields(Projections.include("username"), Projections.excludeId());
+        for (ObjectId objectId :
+                map.keySet()) {
+            Document userQuery = new User().setId(objectId).toDocument();
+            Document userDocument = usersCollection.find(userQuery).projection(fieldsProjection).first();
+            map.put(objectId, new User(userDocument).getUsername());
+        }
+        return map;
     }
 }

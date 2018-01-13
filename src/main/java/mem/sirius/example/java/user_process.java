@@ -110,7 +110,6 @@ public class user_process {
             a.put("status", new OneElementArrayList<String>("success"));
             a.put("user_id", new OneElementArrayList<String>(user.getId().toString()));
             a.put("auth_token", new OneElementArrayList<String>(authToken));
-            a.put("username", new OneElementArrayList<String>(user.getUsername()));
 
             return new Response(a);
         }

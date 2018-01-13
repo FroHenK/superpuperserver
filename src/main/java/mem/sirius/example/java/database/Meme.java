@@ -10,6 +10,7 @@ public class Meme extends Documentable {
     private ObjectId authorId;
     private ObjectId id;
     private String title;
+    private Integer rating = 0;
 
 
     public ObjectId getId() {
@@ -32,6 +33,15 @@ public class Meme extends Documentable {
         return url;
     }
 
+    public Integer getRating() {
+        return rating;
+    }
+
+    public Meme setId(ObjectId id) {
+        this.id = id;
+        return this;
+    }
+
     public Meme setTime(BsonTimestamp time) {
         this.time = time;
         return this;
@@ -42,13 +52,22 @@ public class Meme extends Documentable {
         return this;
     }
 
-    public void setTitle(String title) {
+    public Meme setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public Meme setUrl(String url) {
         this.url = url;
         return this;
+    }
+
+    public Meme setRating(Integer rating) {
+        this.rating = rating;
+        return this;
+    }
+
+    public Meme() {
     }
 
     public Meme(String url) {
@@ -82,6 +101,9 @@ public class Meme extends Documentable {
         if (title != null)
             document.append("title", title);
 
+        if (rating != null && rating != 0)
+            document.append("rating", rating);
+
         return document;
     }
 
@@ -100,6 +122,9 @@ public class Meme extends Documentable {
 
         if (document.containsKey("title"))
             title = document.getString("title");
+
+        if (document.containsKey("rating"))
+            rating = document.getInteger("rating");
     }
 
 
