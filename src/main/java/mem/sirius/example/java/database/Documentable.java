@@ -8,6 +8,7 @@ public abstract class Documentable {
     public abstract void parseFromDocument(Document document);
 
     public Documentable(Document document) {
+        this();
         this.parseFromDocument(document);
     }
 

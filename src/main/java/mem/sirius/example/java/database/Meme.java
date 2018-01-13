@@ -10,7 +10,7 @@ public class Meme extends Documentable {
     private ObjectId authorId;
     private ObjectId id;
     private String title;
-    private Integer rating = 0;
+    private Integer rating;
 
 
     public ObjectId getId() {
@@ -34,7 +34,7 @@ public class Meme extends Documentable {
     }
 
     public Integer getRating() {
-        return rating;
+        return rating != null ? rating : 0;
     }
 
     public Meme setId(ObjectId id) {
@@ -68,6 +68,7 @@ public class Meme extends Documentable {
     }
 
     public Meme() {
+        super();
     }
 
     public Meme(String url) {
@@ -101,7 +102,7 @@ public class Meme extends Documentable {
         if (title != null)
             document.append("title", title);
 
-        if (rating != null && rating != 0)
+        if (rating != null)
             document.append("rating", rating);
 
         return document;

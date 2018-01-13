@@ -11,7 +11,7 @@ public class User extends Documentable {
     private ObjectId id;
     private Integer vkUserId;
     private String username;
-    private Map<String, Integer> isLiked = new HashMap<>();
+    private Map<String, Integer> isLiked;
 
     public ObjectId getId() {
         return id;
@@ -25,8 +25,8 @@ public class User extends Documentable {
         return username;
     }
 
-    public HashMap<String, Integer> getIsLiked() {
-        return (HashMap<String, Integer>) isLiked;
+    public Map<String, Integer> getIsLiked() {
+        return isLiked;
     }
 
     public Integer getIsPostLiked(ObjectId post) {
@@ -59,9 +59,14 @@ public class User extends Documentable {
 
     public User(Document document) {
         super(document);
+        if (isLiked == null)
+            isLiked = new HashMap<>();
     }
 
     public User() {
+        super();
+        if (isLiked == null)
+            isLiked = new HashMap<>();
     }
 
     public Document toDocument() {

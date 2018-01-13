@@ -37,26 +37,26 @@ public class AppTest
 
         App.memeAppDatabase = new MemeAppDatabase(mongo_server, mongo_user, mongo_password, mongo_salt, DATABASE);
         memeAppDatabase = App.memeAppDatabase;
-        {
-            Request a = new Request("{}");
-
-            a.links.put("auth_token", "eY7XifPvqpTosI6HMANeT");
-            a.links.put("meme_id", "5a588642edaaa300046e74bd");
-            a.links.put("text", "I am very interested");
-            a.links.put("parent_id", "5a59c09cb9bb8d363f8c775d");
-
-            comment_process comment_process = new comment_process(a);
-            //System.out.println(comment_process.postComment());
-            System.out.println(comment_process.getComments());
-        }
+//        {
+//            Request a = new Request("{}");
+//
+//            a.links.put("auth_token", "eY7XifPvqpTosI6HMANeT");
+//            a.links.put("meme_id", "5a588642edaaa300046e74bd");
+//            a.links.put("text", "I am very interested");
+//            a.links.put("parent_id", "5a59c09cb9bb8d363f8c775d");
+//
+//            comment_process comment_process = new comment_process(a);
+//            //System.out.println(comment_process.postComment());
+//            System.out.println(comment_process.getComments());
+//        }
 
         {
             Request a = new Request("{}");
 
             a.links.put("action", "change");
-            a.links.put("auth_token", "eY7XifPvqpTosI6HMANeT");
-            a.links.put("new_value", "1");
-            a.links.put("meme_id", "5a588598edaaa300046e74ba");
+            a.links.put("auth_token", "6bY5BLRqBa3gyfVrzCMcS");
+            a.links.put("new_value", "-1");
+            a.links.put("meme_id", "5a588642edaaa300046e74bd");
 
             meme_rating comment_process = new meme_rating(a);
             //System.out.println(comment_process.postComment());
