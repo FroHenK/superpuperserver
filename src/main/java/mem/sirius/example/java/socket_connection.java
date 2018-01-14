@@ -71,11 +71,36 @@ public class socket_connection extends Thread {
                     break;
                 }
                 Request request = new Request(line);
-                if (request.links.get("type").equals("get_list")) {
-                    get_list response = new get_list(request);
+
+                if (request.links.get("type").equals("get_new_list")) {
+                    get_new_list response = new get_new_list(request);
                     String ans = response.getResponse().toString();
                     if (ans != null) {
-                        System.out.println("New answer for getlist " + ans);
+                        System.out.println("New answer for get_new_list " + ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                    continue;
+                }
+
+                if (request.links.get("type").equals("get_old_list")) {
+                    get_old_list response = new get_old_list(request);
+                    String ans = response.getResponse().toString();
+                    if (ans != null) {
+                        System.out.println("New answer for get_old_list " + ans);
+                        System.out.println();
+                        out.writeUTF(ans);
+                        out.flush();
+                    }
+                    continue;
+                }
+
+                if (request.links.get("type").equals("set_viewed")) {
+                    set_viewed response = new set_viewed(request);
+                    String ans = response.getResponse().toString();
+                    if (ans != null) {
+                        System.out.println("New answer for set_viewed " + ans);
                         System.out.println();
                         out.writeUTF(ans);
                         out.flush();
@@ -115,7 +140,6 @@ public class socket_connection extends Thread {
                         out.flush();
                     }
                 }
-
 
                 if (request.links.get("type").equals("meme_rating")) {
                     meme_rating response = new meme_rating(request);
@@ -160,7 +184,6 @@ public class socket_connection extends Thread {
                         out.flush();
                     }
                 }
-
 
                 if (request.links.get("type").equals("close")) {
                     System.out.println("User decide to close");

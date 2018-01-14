@@ -16,7 +16,7 @@ public class meme_rating {
     }
 
     public Response getResponse() {
-        TreeMap<String, String> a = new TreeMap<String, String>();
+        TreeMap<String, Object> a = new TreeMap<>();
         ObjectId memeId = new ObjectId(links.get("meme_id"));
         Meme memeQuery = new Meme().setId(memeId);
         Meme meme = new Meme(App.memeAppDatabase.getMemesCollection().find(memeQuery.toDocument()).first());

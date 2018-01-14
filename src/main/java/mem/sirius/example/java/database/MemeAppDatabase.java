@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 public class MemeAppDatabase {
     private final String server;
@@ -57,6 +58,15 @@ public class MemeAppDatabase {
         return null;
     }
 
+    public Meme getMemeById(ObjectId id) {
+        MongoCursor<Document> cursor = memesCollection.find(new Document("_id", id)).iterator();
+        if (!cursor.hasNext())
+            return null;
+        Document meme = cursor.next();
+        cursor.close();
+        return new Meme(meme);
+    }
+
     private MongoClient mongoClient;
     private MongoDatabase mongoDatabase;
 
@@ -75,12 +85,15 @@ public class MemeAppDatabase {
         commentsCollection = mongoDatabase.getCollection("comments");
     }
 
-    public ArrayList<Meme> memesList(Integer last, Integer num) {
-        ArrayList<Meme> memesList = new ArrayList<Meme>();
-        MongoCursor<Document> cursor = memesCollection.find().sort(new Document("time", -1)).skip(last).limit(num).iterator();
-        while (cursor.hasNext()) {
+    public ArrayList<Meme> memesList(User user, Integer num, String sortBy) {
+        ArrayList<Meme> memesList = new ArrayList<>();
+        MongoCursor<Document> cursor = memesCollection.find().sort(new Document(sortBy, -1)).iterator();
+        Set<String> viewed = user.getIsViewed();
+        while (cursor.hasNext() && memesList.size() < num) {
             Meme meme = new Meme(cursor.next());
-            memesList.add(meme);
+            if (!viewed.contains(meme.getId().toHexString())) {
+                memesList.add(meme);
+            }
         }
         cursor.close();
         return memesList;
