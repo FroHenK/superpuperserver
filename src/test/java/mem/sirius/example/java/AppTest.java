@@ -58,7 +58,7 @@ public class AppTest
             a.links.put("new_value", "-1");
             a.links.put("meme_id", "5a588642edaaa300046e74bd");
 
-            meme_rating comment_process = new meme_rating(a);
+            get_old_list comment_process = new get_old_list(a);
             //System.out.println(comment_process.postComment());
             System.out.println(comment_process.getResponse());
         }

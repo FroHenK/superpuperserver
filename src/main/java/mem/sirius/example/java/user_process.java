@@ -70,7 +70,11 @@ public class user_process {
             a.put("username", new OneElementArrayList<String>(username));
             return new Response(a);
         }
-
+        if (usersCollection.count(new User().setUsername(username).toDocument()) != 0) {
+            a.put("status", new OneElementArrayList<String>("fail"));
+            a.put("message", new OneElementArrayList<String>("nickname_occupied"));
+            return new Response(a);
+        }
 
         String authToken = new RandomString().nextString();
 
