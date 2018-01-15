@@ -9,47 +9,49 @@ import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 
+@RestController
 public class meme_upload {
 
-    private static final int MAX_FILE_SIZE = 10 * 1024 * 1024;
+    private static final int MAX_FILE_SIZE = 2 * 1024 * 1024;//don't forget that we define it in application.properties too
     private static final String URL_PREFIX = "http://azatismagilov00.siteme.org/kek/";
     private static final int FILE_PART_LENGTH = 1024 * 20;
-    private TreeMap<String, String> links = new TreeMap<String, String>();
-    private InputStream inputStream;
 
-    public meme_upload(Request a, InputStream inputStream) {
-        links = a.links;
-        this.inputStream = inputStream;
-    }
 
-    public Response getResponse() {
-        TreeMap<String, Object> a = new TreeMap<>();
-        //auth_token, content_length
-        String authToken = links.get("auth_token");
-        Integer contentLength = Integer.valueOf(links.get("content_length"));
+    @RequestMapping(value = "/upload_meme", method = RequestMethod.POST)
+    public HashMap<String, Object> getResponse(@RequestParam(value = "auth_token") String authToken,
+                                               @RequestParam(value = "file") MultipartFile file) {
+        HashMap<String, Object> a = new HashMap<>();
+
+        if (file.getSize() > MAX_FILE_SIZE) {
+            a.put("status", "fail");
+            a.put("message", "file_too_big");
+            return a;
+        }
+
+        Integer contentLength = Math.toIntExact(file.getSize());
         MongoCollection<Document> memesCollection = App.memeAppDatabase.getMemesCollection();
 
         User user = App.memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
             a.put("status", "fail");
             a.put("message", "invalid_auth_token");
-            return (new Response(a));
+            return a;
         }
 
-        if (contentLength > MAX_FILE_SIZE) {
-            a.put("status", "fail");
-            a.put("message", "file_too_big");
-            return (new Response(a));
-        }
 
         System.out.printf("Accepting image with content length: %d from %s%n", contentLength, user.getUsername());
 
@@ -58,6 +60,7 @@ public class meme_upload {
         String filename = new RandomString().nextString();
         String extension = null;
         try {
+            InputStream inputStream = file.getInputStream();
             ftpClient.connect(App.ftp_host, App.ftp_port);
             ftpClient.enterLocalPassiveMode();
             boolean login = ftpClient.login(App.ftp_user, App.ftp_password);
@@ -74,9 +77,7 @@ public class meme_upload {
                 // I have no idea why I implemented this this particular way
                 // ¯\_(ツ)_/¯
 
-                System.out.println(image + ", " + current + ", " + contentLength);
                 int read = inputStream.read(image, current, Math.min(FILE_PART_LENGTH, contentLength - current));
-                System.out.println("read " + read);
                 storeFileStream.write(image, current, read);
                 storeFileStream.flush();
                 current += read;
@@ -95,7 +96,7 @@ public class meme_upload {
             e.printStackTrace();
             a.put("status", "fail");
             a.put("message", "io_exception");
-            return (new Response(a));
+            return a;
         } catch (MimeTypeException e) {
             e.printStackTrace();
         }
@@ -103,7 +104,7 @@ public class meme_upload {
         if (extension == null) {
             a.put("status", "fail");
             a.put("message", "unknown_extension");
-            return (new Response(a));
+            return a;
         }
 
 
@@ -114,6 +115,6 @@ public class meme_upload {
         memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setRating(0).setAuthorId(user.getId()).toDocument());
 
         //status(success,fail), link
-        return (new Response(a));
+        return a;
     }
 }

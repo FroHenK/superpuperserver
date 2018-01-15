@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import static mem.sirius.example.java.App.memeAppDatabase;
 
-public class get_new_list {
+public class get_new_list {//TODO rewrite
     private TreeMap<String, String> links = new TreeMap<String, String>();
 
     public get_new_list(Request a) {

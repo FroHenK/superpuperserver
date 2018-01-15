@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 @RestController
 public class comment_process {
     public static final int MAX_COMMENT_LENGTH = 300;
-    private TreeMap<String, String> links = new TreeMap<String, String>();
 
 
     //accepts meme_id

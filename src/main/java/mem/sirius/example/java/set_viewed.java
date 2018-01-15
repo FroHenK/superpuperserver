@@ -4,36 +4,37 @@ import com.mongodb.client.MongoCollection;
 import mem.sirius.example.java.database.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 
+@RestController
 public class set_viewed {
-    private TreeMap<String, String> links = new TreeMap<String, String>();
 
-    public set_viewed(Request a) {
-        links = a.links;
-    }
+    @RequestMapping(value = "/set_viewed")
+    public HashMap<String, Object> getResponse(@RequestParam(value = "auth_token") String authToken,
+                                               @RequestParam(value = "meme_id") String memeId) {
+        HashMap<String, Object> a = new HashMap<>();
 
-    public Response getResponse() {
-        TreeMap<String, Object> a = new TreeMap<>();
-
-        String authToken = links.get("auth_token");
         MongoCollection<Document> usersCollection = App.memeAppDatabase.getUsersCollection();
 
         User user = App.memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
             a.put("status", "fail");
-            return new Response(a);
+            a.put("message", "auth_token_is_invalid");
+            return (a);
         }
 
-        ObjectId memeId = new ObjectId(links.get("meme_id"));
-        user.setIsPostViewed(memeId, true);
-        user.pushListOfViewed(memeId);
+        ObjectId meme_id = new ObjectId(memeId);
+        user.setIsPostViewed(meme_id, true);
+        user.pushListOfViewed(meme_id);
 
         Document userIdQuery = new User().setId(user.getId()).toDocument();
         usersCollection.updateOne(userIdQuery, new Document("$set", user.toDocument()));
 
         a.put("status", "success");
-        return new Response(a);
+        return (a);
     }
 }

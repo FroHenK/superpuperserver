@@ -96,7 +96,7 @@ public class Meme extends Documentable {
             document.append("time", toBsonTimestamp(time));
 
         if (authorId != null)
-            document.append("author_id", toObjectId(id));
+            document.append("author_id", toObjectId(authorId));
 
         if (id != null)
             document.append("_id", toObjectId(id));

@@ -5,50 +5,52 @@ import mem.sirius.example.java.database.Meme;
 import mem.sirius.example.java.database.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 
+@RestController
 public class meme_rating {
-    private TreeMap<String, String> links = new TreeMap<String, String>();
 
-    public meme_rating(Request a) {
-        links = a.links;
-    }
+    @RequestMapping(value = "/rate_meme")
+    public HashMap<String, Object> getResponse(@RequestParam(value = "auth_token") String authToken,
+                                               @RequestParam(value = "meme_id") String memeIdString,
+                                               @RequestParam(value = "new_value") Integer newValue) {
+        HashMap<String, Object> a = new HashMap<>();
 
-    public Response getResponse() {
-        TreeMap<String, Object> a = new TreeMap<>();
-        ObjectId memeId = new ObjectId(links.get("meme_id"));
+        ObjectId memeId = new ObjectId(memeIdString);
+
         Meme memeQuery = new Meme().setId(memeId);
         Meme meme = new Meme(App.memeAppDatabase.getMemesCollection().find(memeQuery.toDocument()).first());
 
-        if (links.get("action").equals("change")) {
-            String authToken = links.get("auth_token");
-            Integer newValue = Integer.valueOf(links.get("new_value"));
-            MongoCollection<Document> memesCollection = App.memeAppDatabase.getMemesCollection();
-            MongoCollection<Document> usersCollection = App.memeAppDatabase.getUsersCollection();
+        MongoCollection<Document> memesCollection = App.memeAppDatabase.getMemesCollection();
+        MongoCollection<Document> usersCollection = App.memeAppDatabase.getUsersCollection();
 
-            User user = App.memeAppDatabase.getUserByAuthToken(authToken);
-            if (user == null || Math.abs(newValue) > 1) {
-                a.put("status", "fail");
-                return new Response(a);
-            }
-
-
-            meme.setRating(meme.getRating() - user.getIsPostLiked(memeId));
-            user.setIsPostLiked(memeId, newValue);
-            meme.setRating(meme.getRating() + user.getIsPostLiked(memeId));
-
-            Document memeIdQuery = new Meme().setId(meme.getId()).toDocument();
-            memesCollection.updateOne(memeIdQuery, new Document("$set", new Document("rating", meme.getRating())));
-
-            Document userIdQuery = new User().setId(user.getId()).toDocument();
-            usersCollection.updateOne(userIdQuery, new Document("$set", user.toDocument()));
+        User user = App.memeAppDatabase.getUserByAuthToken(authToken);
+        if (user == null) {
+            a.put("status", "fail");
+            a.put("message", "auth_token_is_invalid");
+            return a;
         }
-        if (links.get("action").equals("get")) {
-            a.put("rating", meme.getRating().toString());
+        if (Math.abs(newValue) > 1) {
+            a.put("status", "fail");
+            a.put("message", "incorrect_new_value");
+            return a;
         }
+
+        meme.setRating(meme.getRating() - user.getIsPostLiked(memeId));
+        user.setIsPostLiked(memeId, newValue);
+        meme.setRating(meme.getRating() + user.getIsPostLiked(memeId));
+
+        Document memeIdQuery = new Meme().setId(meme.getId()).toDocument();
+        memesCollection.updateOne(memeIdQuery, new Document("$set", new Document("rating", meme.getRating())));
+
+        Document userIdQuery = new User().setId(user.getId()).toDocument();
+        usersCollection.updateOne(userIdQuery, new Document("$set", user.toDocument()));
         a.put("status", "success");
-        return new Response(a);
+        return a;
     }
 
 }
