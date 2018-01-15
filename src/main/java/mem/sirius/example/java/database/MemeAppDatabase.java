@@ -9,6 +9,7 @@ import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Morphia;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -76,7 +77,12 @@ public class MemeAppDatabase {
         this.password = password;
         this.salt = salt;
 
+        final Morphia morphia = new Morphia();
+        morphia.mapPackage("mem.sirius.example.java.database");
+
+
         mongoClient = new MongoClient(new MongoClientURI(String.format("mongodb+srv://%s:%s@%s/test", user, password, server)));
+
         mongoDatabase = mongoClient.getDatabase(database);
         memesCollection = mongoDatabase.getCollection("memes");
         usersCollection = mongoDatabase.getCollection("users");

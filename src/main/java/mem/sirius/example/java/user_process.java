@@ -11,24 +11,23 @@ import mem.sirius.example.java.database.Session;
 import mem.sirius.example.java.database.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
+@RestController
 public class user_process {
     private static final Integer APP_ID = 6327207;
     private static final String CLIENT_SECRET = "LACdimcvRWOqsQJUrsOv";
     private TreeMap<String, String> links = new TreeMap<String, String>();
 
-    public user_process(Request a) {
-        links = a.links;
-    }
-
     public Response vkLoginOrCreate() {
-        TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
+        TreeMap<String, Object> a = new TreeMap<>();
         //links contains username, vk_token
         System.out.println("New vk login/registration attempt");
-        System.out.println(links);
         String vkCode = links.get("vk_code");
         String username = links.get("username");
 
@@ -44,9 +43,7 @@ public class user_process {
             e.printStackTrace();
         }
         if (authResponse == null) {
-            ArrayList<String> status_value = new ArrayList<String>();
-            status_value.add("fail");// Thank you
-            a.put("status", status_value);
+            a.put("status", "fail");
             return new Response(a);
         }
         Integer vkUserId = authResponse.getUserId();
@@ -64,15 +61,15 @@ public class user_process {
             String authToken = new RandomString().nextString();
             sessionsCollection.insertOne(new Session(user.getId(), authToken).toDocument());//new Document("user_id", user.getId()).append("auth_token", authToken));
 
-            a.put("status", new OneElementArrayList<String>("login"));
-            a.put("user_id", new OneElementArrayList<String>(user.getId().toString()));
-            a.put("auth_token", new OneElementArrayList<String>(authToken));
-            a.put("username", new OneElementArrayList<String>(username));
+            a.put("status", "login");
+            a.put("user_id", user.getId().toHexString());
+            a.put("auth_token", authToken);
+            a.put("username", username);
             return new Response(a);
         }
         if (usersCollection.count(new User().setUsername(username).toDocument()) != 0) {
-            a.put("status", new OneElementArrayList<String>("fail"));
-            a.put("message", new OneElementArrayList<String>("nickname_occupied"));
+            a.put("status", "fail");
+            a.put("message", "nickname_occupied");
             return new Response(a);
         }
 
@@ -83,63 +80,64 @@ public class user_process {
         sessionsCollection.insertOne(new Session(userId, authToken).toDocument());
 
 
-        a.put("status", new OneElementArrayList<String>("success"));
-        a.put("user_id", new OneElementArrayList<String>(userId.toString()));
-        a.put("auth_token", new OneElementArrayList<String>(authToken));
-        a.put("username", new OneElementArrayList<String>(username));
+        a.put("status", "success");
+        a.put("user_id", userId.toHexString());
+        a.put("auth_token", authToken);
+        a.put("username", username);
 
         //user_id; status "success","fail"; auth_token;username
         return new Response(a);
     }
 
-    public Response validateSession() {
-        TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
+    @RequestMapping(value = "/validate_session")
+    public HashMap<String, Object> validateSession(@RequestParam(value = "auth_token") String authToken) {
+        HashMap<String, Object> a = new HashMap<>();
         System.out.println("New session validation attempt");
-        System.out.println(links);
-        String authToken = links.get("auth_token");
 
         MongoCollection<Document> usersCollection = App.memeAppDatabase.getUsersCollection();
         MongoCollection<Document> sessionsCollection = App.memeAppDatabase.getSessionsCollection();
 
 
-        if (sessionsCollection.count(new Session().setAuthToken(authToken).toDocument()) != 0) {
-            MongoCursor<Document> cursor = sessionsCollection.find(new Session().setAuthToken(authToken).toDocument()).iterator();
+        Document authTokenQuery = new Session().setAuthToken(authToken).toDocument();
+        if (sessionsCollection.count(authTokenQuery) != 0) {
+            MongoCursor<Document> cursor = sessionsCollection.find(authTokenQuery).iterator();
             Session session = new Session(cursor.next());
             cursor.close();
-            cursor = usersCollection.find(new User().setId(session.getUserId()).toDocument()).iterator();
+            User userIdQuery = new User().setId(session.getUserId());
+            cursor = usersCollection.find(userIdQuery.toDocument()).iterator();
 
             User user = new User(cursor.next());
             cursor.close();
 
-            a.put("status", new OneElementArrayList<String>("success"));
-            a.put("user_id", new OneElementArrayList<String>(user.getId().toString()));
-            a.put("auth_token", new OneElementArrayList<String>(authToken));
+            a.put("status", "success");
+            a.put("user_id", user.getId().toHexString());
+            a.put("auth_token", authToken);
+            a.put("username", user.getUsername());
 
-            return new Response(a);
+            return a;
         }
 
-        a.put("status", new OneElementArrayList<String>("fail"));
-        return new Response(a);
+        a.put("status", "fail");
+        a.put("message", "auth_token_is_invalid");
+        return a;
     }
 
-    public Response killSession() {
-        TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
+    @RequestMapping(value = "/kill_session")
+    public HashMap<String, Object> killSession(@RequestParam(value = "auth_token") String authToken) {
+        HashMap<String, Object> a = new HashMap<>();
         System.out.println("New session murder attempt");
-        System.out.println(links);
-        String authToken = links.get("auth_token");
 
         MongoCollection<Document> usersCollection = App.memeAppDatabase.getUsersCollection();
         MongoCollection<Document> sessionsCollection = App.memeAppDatabase.getSessionsCollection();
 
-
         if (sessionsCollection.deleteMany(new Session().setAuthToken(authToken).toDocument()).getDeletedCount() != 0) {
-
-            a.put("status", new OneElementArrayList<String>("success"));
-            return new Response(a);
+            a.put("status", "success");
+            a.put("message", "auth_token_is_invalid");
+            return (a);
         }
 
-        a.put("status", new OneElementArrayList<String>("fail"));
-        return new Response(a);
+        a.put("status", "fail");
+        return (a);
     }
 
 

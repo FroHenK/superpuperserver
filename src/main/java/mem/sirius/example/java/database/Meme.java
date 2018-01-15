@@ -4,25 +4,27 @@ import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDateTime;
+
 public class Meme extends Documentable {
     private String url;
-    private BsonTimestamp time;
-    private ObjectId authorId;
-    private ObjectId id;
+    private LocalDateTime time;
+    private String authorId;
+    private String id;
     private String title;
     private Integer rating;
 
 
     public ObjectId getId() {
-        return id;
+        return toObjectId(id);
     }
 
     public BsonTimestamp getTime() {
-        return time;
+        return toBsonTimestamp(time);
     }
 
     public ObjectId getAuthorId() {
-        return authorId;
+        return toObjectId(authorId);
     }
 
     public String getTitle() {
@@ -38,17 +40,17 @@ public class Meme extends Documentable {
     }
 
     public Meme setId(ObjectId id) {
-        this.id = id;
+        this.id = fromObjectId(id);
         return this;
     }
 
     public Meme setTime(BsonTimestamp time) {
-        this.time = time;
+        this.time = fromBsonTimestamp(time);
         return this;
     }
 
     public Meme setAuthorId(ObjectId authorId) {
-        this.authorId = authorId;
+        this.authorId = fromObjectId(authorId);
         return this;
     }
 
@@ -77,7 +79,7 @@ public class Meme extends Documentable {
 
     public Meme(String url, BsonTimestamp time) {
         this.url = url;
-        this.time = time;
+        this.time = fromBsonTimestamp(time);
     }
 
 
@@ -91,13 +93,13 @@ public class Meme extends Documentable {
             document.append("url", url);
 
         if (time != null)
-            document.append("time", time);
+            document.append("time", toBsonTimestamp(time));
 
         if (authorId != null)
-            document.append("author_id", authorId);
+            document.append("author_id", toObjectId(id));
 
         if (id != null)
-            document.append("_id", id);
+            document.append("_id", toObjectId(id));
 
         if (title != null)
             document.append("title", title);
@@ -113,13 +115,13 @@ public class Meme extends Documentable {
             url = document.getString("url");
 
         if (document.containsKey("time"))
-            time = document.get("time", BsonTimestamp.class);
+            time = fromBsonTimestamp(document.get("time", BsonTimestamp.class));
 
         if (document.containsKey("author_id"))
-            authorId = document.get("author_id", ObjectId.class);
+            authorId = fromObjectId(document.get("author_id", ObjectId.class));
 
         if (document.containsKey("_id"))
-            id = document.get("_id", ObjectId.class);
+            id = fromObjectId(document.get("_id", ObjectId.class));
 
         if (document.containsKey("title"))
             title = document.getString("title");

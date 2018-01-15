@@ -4,6 +4,8 @@ import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDateTime;
+
 public class Comment extends Documentable {
     public Comment(Document document) {
         super(document);
@@ -12,27 +14,27 @@ public class Comment extends Documentable {
     public Comment() {
     }
 
-    private ObjectId id;
-    private ObjectId memeId;
-    private ObjectId parentCommentId;
-    private ObjectId authorId;
+    private String id;
+    private String memeId;
+    private String parentCommentId;
+    private String authorId;
     private String text;
-    private BsonTimestamp time;
+    private LocalDateTime time;
 
     public ObjectId getId() {
-        return id;
+        return toObjectId(id);
     }
 
     public ObjectId getMemeId() {
-        return memeId;
+        return toObjectId(memeId);
     }
 
     public ObjectId getParentCommentId() {
-        return parentCommentId;
+        return toObjectId(parentCommentId);
     }
 
     public ObjectId getAuthorId() {
-        return authorId;
+        return toObjectId(authorId);
     }
 
     public String getText() {
@@ -40,27 +42,27 @@ public class Comment extends Documentable {
     }
 
     public BsonTimestamp getTime() {
-        return time;
+        return toBsonTimestamp(time);
     }
 
 
     public Comment setId(ObjectId id) {
-        this.id = id;
+        this.id = fromObjectId(id);
         return this;
     }
 
     public Comment setParentCommentId(ObjectId parentCommentId) {
-        this.parentCommentId = parentCommentId;
+        this.parentCommentId = fromObjectId(parentCommentId);
         return this;
     }
 
     public Comment setMemeId(ObjectId memeId) {
-        this.memeId = memeId;
+        this.memeId = fromObjectId(memeId);
         return this;
     }
 
     public Comment setAuthorId(ObjectId authorId) {
-        this.authorId = authorId;
+        this.authorId = fromObjectId(authorId);
         return this;
     }
 
@@ -70,50 +72,50 @@ public class Comment extends Documentable {
     }
 
     public Comment setTime(BsonTimestamp time) {
-        this.time = time;
+        this.time = fromBsonTimestamp(time);
         return this;
     }
 
     public Document toDocument() {
         Document document = new Document();
         if (id != null)
-            document.append("_id", id);
+            document.append("_id", toObjectId(id));
 
         if (parentCommentId != null)
-            document.append("parent_comment", parentCommentId);
+            document.append("parent_comment", toObjectId(parentCommentId));
 
         if (authorId != null)
-            document.append("author_id", authorId);
+            document.append("author_id", toObjectId(authorId));
 
         if (memeId != null)
-            document.append("meme_id", memeId);
+            document.append("meme_id", toObjectId(memeId));
 
         if (text != null)
             document.append("text", text);
 
         if (time != null)
-            document.append("time", time);
+            document.append("time", toBsonTimestamp(time));
 
         return document;
     }
 
     public void parseFromDocument(Document document) {
         if (document.containsKey("_id"))
-            id = document.getObjectId("_id");
+            id = fromObjectId(document.getObjectId("_id"));
 
         if (document.containsKey("parent_comment"))
-            parentCommentId = document.getObjectId("parent_comment");
+            parentCommentId = fromObjectId(document.getObjectId("parent_comment"));
 
         if (document.containsKey("author_id"))
-            authorId = document.getObjectId("author_id");
+            authorId = fromObjectId(document.getObjectId("author_id"));
 
         if (document.containsKey("meme_id"))
-            memeId = document.getObjectId("meme_id");
+            memeId = fromObjectId(document.getObjectId("meme_id"));
 
         if (document.containsKey("text"))
             text = document.getString("text");
 
         if (document.containsKey("time"))
-            time = document.get("time", BsonTimestamp.class);
+            time = fromBsonTimestamp(document.get("time", BsonTimestamp.class));
     }
 }

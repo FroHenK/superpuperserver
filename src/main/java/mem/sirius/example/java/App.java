@@ -1,18 +1,16 @@
 package mem.sirius.example.java;
 
 
-import mem.sirius.example.java.database.Meme;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mem.sirius.example.java.database.MemeAppDatabase;
-import org.bson.BsonTimestamp;
-import org.bson.types.ObjectId;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.ServerSocket;
-import java.net.Socket;
 
 @RestController
 @SpringBootApplication
@@ -47,7 +45,12 @@ public class App {
 
 
     public static void main(String[] args) {
-        System.out.println("Version: 2 WebSocket Try");
+        System.out.println("Version: 3 RestApi");
+
+//        Document parse = Document.parse("{\"comments\":[{\"id\":{\"timestamp\":1516006157,\"machineIdentifier\":3246456,\"processIdentifier\":15670,\"counter\":15831739,\"time\":1516006157000,\"date\":1516006157000,\"timeSecond\":1516006157},\"memeId\":{\"timestamp\":1515750978,\"machineIdentifier\":15575715,\"processIdentifier\":4,\"counter\":7238845,\"time\":1515750978000,\"date\":1515750978000,\"timeSecond\":1515750978},\"parentCommentId\":null,\"authorId\":{\"timestamp\":1515962055,\"machineIdentifier\":4093892,\"processIdentifier\":4,\"counter\":13808805,\"time\":1515962055000,\"date\":1515962055000,\"timeSecond\":1515962055},\"text\":\"kek\",\"time\":{\"value\":6511196864849641474,\"time\":1516006157,\"bsonType\":\"TIMESTAMP\",\"inc\":2,\"document\":false,\"string\":false,\"number\":false,\"int32\":false,\"int64\":false,\"decimal128\":false,\"double\":false,\"boolean\":false,\"objectId\":false,\"dbpointer\":false,\"timestamp\":true,\"binary\":false,\"dateTime\":false,\"symbol\":false,\"regularExpression\":false,\"javaScript\":false,\"javaScriptWithScope\":false,\"array\":false,\"null\":false}}],\"usernames\":{\"5a5bbec73e77c40004d2b4a5\":\"ggbet\"}}");
+//        Document comment = (Document)parse.get("comments", ArrayList.class).get(0);
+//        Comment comment1 = new Comment(comment);
+
         port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "5000");
 
         mongo_server = (System.getenv(MONGO_SERVER) != null ? System.getenv(MONGO_SERVER) : "localhost");
@@ -62,30 +65,33 @@ public class App {
         ftp_user = (System.getenv(FTP_USER) != null ? System.getenv(FTP_USER) : "user");
         ftp_password = (System.getenv(FTP_PASSWORD) != null ? System.getenv(FTP_PASSWORD) : "password");
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
 
         SpringApplication.run(App.class, args);
 
         System.out.println("Port is :" + port);
-        ServerSocket ss = null;
-        try {
-            ss = new ServerSocket(port);
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
-        while (true)
-            try {
-                System.out.println("Waiting for a client...");
-                Socket socket = ss.accept();
-                new Thread(new socket_connection(socket)).start();
-            } catch (Exception x) {
-                x.printStackTrace();
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+        return new Jackson2ObjectMapperBuilder() {
+
+            @Override
+            public void configure(ObjectMapper objectMapper) {
+                super.configure(objectMapper);
+                objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+                objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             }
+
+        };
 
     }
 
-    @RequestMapping(value = "/greeting")
-    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-
-        return new Meme().setTitle(name).setAuthorId(new ObjectId("5a5ba201182b3e0004c2ed09")).setTime(new BsonTimestamp()).toDocument().toJson();
+    @RequestMapping(value = "/")
+    public String greeting() {
+        return "Server is working";
     }
 }

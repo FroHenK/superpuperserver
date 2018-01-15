@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 
@@ -33,7 +32,7 @@ public class meme_upload {
     }
 
     public Response getResponse() {
-        TreeMap<String, ArrayList<String>> a = new TreeMap<String, ArrayList<String>>();
+        TreeMap<String, Object> a = new TreeMap<>();
         //auth_token, content_length
         String authToken = links.get("auth_token");
         Integer contentLength = Integer.valueOf(links.get("content_length"));
@@ -41,14 +40,14 @@ public class meme_upload {
 
         User user = App.memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
-            a.put("status", new OneElementArrayList<String>("fail"));
-            a.put("message", new OneElementArrayList<String>("invalid_auth_token"));
+            a.put("status", "fail");
+            a.put("message", "invalid_auth_token");
             return (new Response(a));
         }
 
         if (contentLength > MAX_FILE_SIZE) {
-            a.put("status", new OneElementArrayList<String>("fail"));
-            a.put("message", new OneElementArrayList<String>("file_too_big"));
+            a.put("status", "fail");
+            a.put("message", "file_too_big");
             return (new Response(a));
         }
 
@@ -94,23 +93,23 @@ public class meme_upload {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            a.put("status", new OneElementArrayList<String>("fail"));
-            a.put("message", new OneElementArrayList<String>("io_exception"));
+            a.put("status", "fail");
+            a.put("message", "io_exception");
             return (new Response(a));
         } catch (MimeTypeException e) {
             e.printStackTrace();
         }
 
         if (extension == null) {
-            a.put("status", new OneElementArrayList<String>("fail"));
-            a.put("message", new OneElementArrayList<String>("unknown_extension"));
+            a.put("status", "fail");
+            a.put("message", "unknown_extension");
             return (new Response(a));
         }
 
 
-        a.put("status", new OneElementArrayList<String>("success"));
+        a.put("status", "success");
         String memeUrl = URL_PREFIX + filename + extension;
-        a.put("link", new OneElementArrayList<String>(memeUrl));
+        a.put("link", memeUrl);
 
         memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setRating(0).setAuthorId(user.getId()).toDocument());
 

@@ -3,17 +3,20 @@ package mem.sirius.example.java.database;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class Session extends Documentable {
-    private ObjectId id;
-    private ObjectId userId;
+import java.io.Serializable;
+
+public class Session extends Documentable implements Serializable {
+
+    private String id;
+    private String userId;
     private String authToken;
 
     public ObjectId getId() {
-        return id;
+        return toObjectId(id);
     }
 
     public ObjectId getUserId() {
-        return userId;
+        return toObjectId(userId);
     }
 
     public String getAuthToken() {
@@ -21,7 +24,7 @@ public class Session extends Documentable {
     }
 
     public Session setUserId(ObjectId userId) {
-        this.userId = userId;
+        this.userId = fromObjectId(userId);
         return this;
     }
 
@@ -35,7 +38,7 @@ public class Session extends Documentable {
     }
 
     public Session(ObjectId userId, String authToken) {
-        this.userId = userId;
+        this.userId = fromObjectId(userId);
         this.authToken = authToken;
     }
 
@@ -49,10 +52,10 @@ public class Session extends Documentable {
             document.append("auth_token", authToken);
 
         if (userId != null)
-            document.append("user_id", userId);
+            document.append("user_id", toObjectId(userId));
 
         if (id != null)
-            document.append("_id", id);
+            document.append("_id", toObjectId(id));
 
         return document;
     }
@@ -62,10 +65,10 @@ public class Session extends Documentable {
             authToken = document.getString("auth_token");
 
         if (document.containsKey("_id"))
-            id = document.getObjectId("_id");
+            id = fromObjectId(document.getObjectId("_id"));
 
         if (document.containsKey("user_id"))
-            userId = document.getObjectId("user_id");
+            userId = fromObjectId(document.getObjectId("user_id"));
 
     }
 }

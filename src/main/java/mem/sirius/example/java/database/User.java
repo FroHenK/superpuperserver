@@ -7,7 +7,7 @@ import java.util.*;
 
 public class User extends Documentable {
 
-    private ObjectId id;
+    private String id;
     private Integer vkUserId;
     private String username;
     private Map<String, Integer> isLiked;
@@ -15,7 +15,7 @@ public class User extends Documentable {
     private ArrayList<String> listOfViewed;
 
     public ObjectId getId() {
-        return id;
+        return toObjectId(id);
     }
 
     public Integer getVkUserId() {
@@ -48,7 +48,7 @@ public class User extends Documentable {
     }
 
     public User setId(ObjectId id) {
-        this.id = id;
+        this.id = fromObjectId(id);
         return this;
     }
 
@@ -120,7 +120,7 @@ public class User extends Documentable {
     public Document toDocument() {
         Document document = new Document();
         if (id != null)
-            document.append("_id", id);
+            document.append("_id", toObjectId(id));
 
         if (vkUserId != null)
             document.append("vk_user_id", vkUserId);
@@ -145,7 +145,7 @@ public class User extends Documentable {
 
     public void parseFromDocument(Document document) {
         if (document.containsKey("_id"))
-            id = document.getObjectId("_id");
+            id = fromObjectId(document.getObjectId("_id"));
 
         if (document.containsKey("vk_user_id"))
             vkUserId = document.getInteger("vk_user_id");

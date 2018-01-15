@@ -6,24 +6,27 @@ import mem.sirius.example.java.database.User;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+@RestController
 public class comment_process {
+    public static final int MAX_COMMENT_LENGTH = 300;
     private TreeMap<String, String> links = new TreeMap<String, String>();
-
-    public comment_process(Request a) {
-        links = a.links;
-    }
 
 
     //accepts meme_id
-    public Response getComments() {
-        String memeId = links.get("meme_id");
-        TreeMap<String, Object> a = new TreeMap<String, Object>();
+    @RequestMapping(value = "/get_comments")
+    public HashMap getComments(@RequestParam(value = "meme_id") String memeId) {
+        System.out.println(memeId);
+        HashMap map = new HashMap();
         ArrayList<Comment> comments = App.memeAppDatabase.commentsList(new ObjectId(memeId));
+
         HashMap<ObjectId, String> usernamesMap = new HashMap<ObjectId, String>();
 
         for (Comment comment :
@@ -33,43 +36,52 @@ public class comment_process {
 
         App.memeAppDatabase.assignUsernamesToIds(usernamesMap);
 
-        a.put("comments", comments);
-        a.put("usernames", usernamesMap);
-
-        return new Response(a);
+        map.put("status", "success");
+        map.put("comments", comments);
+        map.put("usernames", usernamesMap);
+        //document.put("comment",new Comment().setTe
+        return map;
     }
 
     //accepts auth_token, meme_id, text, parent_id(optional)
-    public Response postComment() {
-        TreeMap<String, Object> a = new TreeMap<String, Object>();
+    @RequestMapping(value = "/post_comments")
+    public HashMap postComment(
+            @RequestParam(value = "auth_token") String authToken,
+            @RequestParam(value = "meme_id") String meme_id,
+            @RequestParam(value = "text") String text,
+            @RequestParam(value = "parent_id", defaultValue = "null") String parent_id) {
 
-        String authToken = links.get("auth_token");
+        if (parent_id.equals("null"))
+            parent_id = null;
+
+        HashMap a = new HashMap();
 
         User user = App.memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
             a.put("status", "fail");
             a.put("message", "invalid_auth_token");
-            return new Response(a);
+            return a;
         }
 
-        MongoCollection<Document> commentsCollection = App.memeAppDatabase.getCommentsCollection();
-
-        ObjectId memeId = new ObjectId(links.get("meme_id"));
-        ObjectId parentId = null;
-        String text = links.get("text");
-
-        if (text.length() > 300) {
+        if (text.length() > MAX_COMMENT_LENGTH) {
             a.put("status", "fail");
             a.put("message", "lol_tractor_driver");
         }
 
-        if (links.containsKey("parent_id")) {
-            parentId = new ObjectId(links.get("parent_id"));
+        MongoCollection<Document> commentsCollection = App.memeAppDatabase.getCommentsCollection();
+
+        ObjectId memeId = new ObjectId(meme_id);
+
+
+        ObjectId parentId = null;
+
+        if (parent_id != null) {
+            parentId = new ObjectId(parent_id);
             Document commentQuery = new Comment().setId(parentId).setMemeId(memeId).toDocument();
             if (commentsCollection.count(commentQuery) == 0) {
                 a.put("status", "fail");
                 a.put("message", "parent_comment_does_not_exist");
-                return new Response(a);
+                return a;
             }
         }
 
@@ -79,7 +91,7 @@ public class comment_process {
 
         a.put("status", "success");
 
-        return new Response(a);
+        return a;
     }
 
 }
