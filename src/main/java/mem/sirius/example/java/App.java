@@ -1,12 +1,21 @@
 package mem.sirius.example.java;
 
 
+import mem.sirius.example.java.database.Meme;
 import mem.sirius.example.java.database.MemeAppDatabase;
+import org.bson.BsonTimestamp;
+import org.bson.types.ObjectId;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 
-// Zdes bil ya
+@RestController
+@SpringBootApplication
 public class App {
     public static final String PORT = "PORT";
 
@@ -54,6 +63,8 @@ public class App {
         ftp_password = (System.getenv(FTP_PASSWORD) != null ? System.getenv(FTP_PASSWORD) : "password");
 
 
+        SpringApplication.run(App.class, args);
+
         System.out.println("Port is :" + port);
         ServerSocket ss = null;
         try {
@@ -70,5 +81,11 @@ public class App {
                 x.printStackTrace();
             }
 
+    }
+
+    @RequestMapping(value = "/greeting")
+    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+
+        return new Meme().setTitle(name).setAuthorId(new ObjectId("5a5ba201182b3e0004c2ed09")).setTime(new BsonTimestamp()).toDocument().toJson();
     }
 }

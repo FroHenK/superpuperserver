@@ -27,6 +27,7 @@ public class get_new_list {
             return new Response(a);
         }
 
+        //sort_by:"rating", "time"
         memes = memeAppDatabase.memesList(user, count, links.get("sort_by"));
 
         a.put("status", "success");

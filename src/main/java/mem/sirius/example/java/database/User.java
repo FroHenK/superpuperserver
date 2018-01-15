@@ -98,6 +98,7 @@ public class User extends Documentable {
 
     public User(Document document) {
         super(document);
+
         if (isLiked == null)
             isLiked = new HashMap<>();
         if (isViewed == null)
@@ -136,6 +137,9 @@ public class User extends Documentable {
         if (isViewed != null && !isViewed.isEmpty())
             document.append("is_viewed", isViewed);
 
+        if (listOfViewed != null && !listOfViewed.isEmpty())
+            document.append("list_of_viewed", listOfViewed);
+
         return document;
     }
 
@@ -152,9 +156,12 @@ public class User extends Documentable {
         if (document.containsKey("is_liked"))
             isLiked = document.get("is_liked", Map.class);
 
-        if (document.containsKey("is_viewed"))
-            isViewed = document.get("is_viewed", Set.class);
-
+        if (document.containsKey("is_viewed")) {
+            ArrayList<String> is_viewed = document.get("is_viewed", ArrayList.class);
+            if (is_viewed != null && is_viewed.size() > 0) {
+                isViewed = new TreeSet<>(is_viewed);
+            }
+        }
         if (document.containsKey("list_of_viewed"))
             listOfViewed = document.get("list_of_viewed", ArrayList.class);
 

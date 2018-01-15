@@ -53,12 +53,13 @@ public class AppTest
         {
             Request a = new Request("{}");
 
-            a.links.put("action", "change");
-            a.links.put("auth_token", "6bY5BLRqBa3gyfVrzCMcS");
-            a.links.put("new_value", "-1");
-            a.links.put("meme_id", "5a588642edaaa300046e74bd");
+            a.links.put("auth_token", "8j4Y0rr7Mvb8pSo4voLXk");
+            a.links.put("last", "0");
+            a.links.put("count", "10");
+            a.links.put("sort_by", "time");
+            a.links.put("meme_id", "5a58ae090156ce754e858bc9");
 
-            set_viewed comment_process = new set_viewed(a);
+            get_new_list comment_process = new get_new_list(a);
             //System.out.println(comment_process.postComment());
             System.out.println(comment_process.getResponse());
         }
