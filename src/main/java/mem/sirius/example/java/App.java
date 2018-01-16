@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import mem.sirius.example.java.database.MemeAppDatabase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +53,7 @@ public class App {
 //        Document comment = (Document)parse.get("comments", ArrayList.class).get(0);
 //        Comment comment1 = new Comment(comment);
 
-        port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "5000");
+        port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "8080");
 
         mongo_server = (System.getenv(MONGO_SERVER) != null ? System.getenv(MONGO_SERVER) : "localhost");
         mongo_user = (System.getenv(MONGO_USER) != null ? System.getenv(MONGO_USER) : "user");
@@ -72,7 +74,7 @@ public class App {
 
         SpringApplication.run(App.class, args);
 
-        System.out.println("Port is: " + port);
+        System.out.println("Started on port: " + port);
     }
 
     @Bean
@@ -88,6 +90,16 @@ public class App {
 
         };
 
+    }
+
+    @Configuration
+    public class ServletConfig {
+        @Bean
+        public EmbeddedServletContainerCustomizer containerCustomizer() {
+            return (container -> {
+                container.setPort(port);
+            });
+        }
     }
 
     @RequestMapping(value = "/")
