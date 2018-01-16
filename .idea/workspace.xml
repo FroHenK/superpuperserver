@@ -8,12 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="93a55e11-0323-4824-b75c-74d5bc6d00bc" name="First" comment="Deploy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/META-INF/workspace.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/comment_process.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/comment_process.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/database/MemeAppDatabase.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/database/MemeAppDatabase.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_new_list.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_new_list.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_old_list.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_old_list.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_top_list.java" afterPath="$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_top_list.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -72,7 +66,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comment_process.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="comment_process.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/comment_process.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
@@ -86,13 +80,13 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_new_list.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="134">
-              <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="41" />
+              <caret line="50" column="8" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -344,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Heroku Deployment.Heroku Deployment">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -627,21 +621,7 @@
       <workItem from="1516019172145" duration="4694000" />
       <workItem from="1516034852315" duration="6855000" />
       <workItem from="1516044696618" duration="4926000" />
-      <workItem from="1516083521706" duration="9901000" />
-    </task>
-    <task id="LOCAL-00064" summary="Added authorisation">
-      <created>1515616629728</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1515616629728</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Deploy">
-      <created>1515616662518</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1515616662518</updated>
+      <workItem from="1516083521706" duration="10098000" />
     </task>
     <task id="LOCAL-00066" summary="Deploy">
       <created>1515616702848</created>
@@ -972,7 +952,21 @@
       <option name="project" value="LOCAL" />
       <updated>1516092536339</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="authors made explicit">
+      <created>1516094527947</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1516094527947</updated>
+    </task>
+    <task id="LOCAL-00114" summary="Deploy">
+      <created>1516094576076</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1516094576076</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1008,7 +1002,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="194144000" />
+    <option name="totallyTimeSpent" value="194341000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1021,11 +1015,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="8" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30194804" sideWeight="0.3628788" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27597404" sideWeight="0.6371212" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27597404" sideWeight="0.6371212" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1042,7 +1035,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25811687" sideWeight="0.53712124" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43344155" sideWeight="0.7151515" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43344155" sideWeight="0.7151515" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Floobits" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42424244" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3068182" sideWeight="0.46439394" order="11" side_tool="false" content_ui="tabs" x="285" y="474" width="906" height="606" />
@@ -1105,7 +1098,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="SHOW_DIRTY_RECURSIVELY" value="true" />
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
-    <MESSAGE value="Fixed server" />
     <MESSAGE value="Added memes" />
     <MESSAGE value="DEBUG" />
     <MESSAGE value="WEBSOCKET" />
@@ -1129,6 +1121,7 @@
     <MESSAGE value="rewrote a lot of code, added application.properties file. a lot of untested code, will need to test tomorrow" />
     <MESSAGE value="edited meme lists" />
     <MESSAGE value="configured port" />
+    <MESSAGE value="authors made explicit" />
     <MESSAGE value="Deploy" />
     <option name="LAST_COMMIT_MESSAGE" value="Deploy" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1603,19 +1596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="49" column="45" lean-forward="false" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
-          <folding>
-            <element signature="e#4802#5192#0" expanded="true" />
-            <element signature="e#5191#5192#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5555#5556#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/bson/3.6.1/bson-3.6.1.jar!/org/bson/types/ObjectId.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1637,7 +1617,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/get_new_list.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
-          <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="41" />
+          <caret line="50" column="8" lean-forward="false" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -1663,6 +1643,19 @@
         <state relative-caret-position="165">
           <caret line="34" column="63" lean-forward="true" selection-start-line="34" selection-start-column="63" selection-end-line="34" selection-end-column="63" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mem/sirius/example/java/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="49" column="45" lean-forward="false" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
+          <folding>
+            <element signature="e#4802#5192#0" expanded="true" />
+            <element signature="e#5191#5192#0" expanded="true" />
+            <element signature="e#5513#5514#0" expanded="true" />
+            <element signature="e#5555#5556#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
