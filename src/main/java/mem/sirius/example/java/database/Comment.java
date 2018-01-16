@@ -4,8 +4,6 @@ import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.time.LocalDateTime;
-
 public class Comment extends Documentable {
     public Comment(Document document) {
         super(document);
@@ -19,7 +17,7 @@ public class Comment extends Documentable {
     private String parentCommentId;
     private String authorId;
     private String text;
-    private LocalDateTime time;
+    private Long time;
 
     public ObjectId getId() {
         return toObjectId(id);
