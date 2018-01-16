@@ -34,11 +34,22 @@ public class get_new_list {
             return a;
         }
 
+
         //sort_by:"rating", "time"
         memes = memeAppDatabase.memesList(user, count, "_id", Documentable.toObjectId(last));
 
+        HashMap<String, String> usernamesMap = new HashMap<>();
+        for (Meme comment :
+                memes) {
+            usernamesMap.put(comment.getAuthorId().toHexString(), null);
+        }
+
+        memeAppDatabase.assignUsernamesToIds(usernamesMap);
+
         a.put("status", "success");
         a.put("links", memes);
+        a.put("usernames", usernamesMap);
+
         return a;
     }
 }

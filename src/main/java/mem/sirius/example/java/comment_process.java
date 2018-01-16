@@ -25,11 +25,11 @@ public class comment_process {
         HashMap map = new HashMap();
         ArrayList<Comment> comments = App.memeAppDatabase.commentsList(new ObjectId(memeId));
 
-        HashMap<ObjectId, String> usernamesMap = new HashMap<ObjectId, String>();
+        HashMap<String, String> usernamesMap = new HashMap<>();
 
         for (Comment comment :
                 comments) {
-            usernamesMap.put(comment.getAuthorId(), null);
+            usernamesMap.put(comment.getAuthorId().toHexString(), null);
         }
 
         App.memeAppDatabase.assignUsernamesToIds(usernamesMap);
@@ -37,7 +37,8 @@ public class comment_process {
         map.put("status", "success");
         map.put("comments", comments);
         map.put("usernames", usernamesMap);
-        //document.put("comment",new Comment().setTe
+
+
         return map;
     }
 

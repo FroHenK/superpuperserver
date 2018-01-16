@@ -13,6 +13,7 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -152,6 +153,17 @@ public class MemeAppDatabase {
         for (ObjectId objectId :
                 map.keySet()) {
             Document userQuery = new User().setId(objectId).toDocument();
+            Document userDocument = usersCollection.find(userQuery).projection(fieldsProjection).first();
+            map.put(objectId, new User(userDocument).getUsername());
+        }
+        return map;
+    }
+
+    public Map<String, String> assignUsernamesToIds(HashMap<String, String> map) {
+        Bson fieldsProjection = Projections.fields(Projections.include("username"), Projections.excludeId());
+        for (String objectId :
+                map.keySet()) {
+            Document userQuery = new User().setId(new ObjectId(objectId)).toDocument();
             Document userDocument = usersCollection.find(userQuery).projection(fieldsProjection).first();
             map.put(objectId, new User(userDocument).getUsername());
         }

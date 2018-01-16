@@ -35,8 +35,18 @@ public class get_old_list {
 
         memes = memeAppDatabase.oldMemesList(user, count, Documentable.toObjectId(last));
 
+        HashMap<String, String> usernamesMap = new HashMap<>();
+        for (Meme comment :
+                memes) {
+            usernamesMap.put(comment.getAuthorId().toHexString(), null);
+        }
+
+        memeAppDatabase.assignUsernamesToIds(usernamesMap);
+
         a.put("status", "success");
         a.put("links", memes);
+        a.put("usernames", usernamesMap);
+
         return a;
     }
 }
