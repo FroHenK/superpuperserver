@@ -1,43 +1,42 @@
 package mem.sirius.example.java;
 
+import mem.sirius.example.java.database.Documentable;
 import mem.sirius.example.java.database.Meme;
 import mem.sirius.example.java.database.User;
-import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 import static mem.sirius.example.java.App.memeAppDatabase;
 
-public class get_old_list {//TODO rewrite
-    private TreeMap<String, String> links = new TreeMap<String, String>();
+@RestController
+public class get_old_list {
 
-    public get_old_list(Request a) {
-        links = a.links;
-    }
+    @RequestMapping(value = "/get_old_list")
+    public HashMap getResponse(@RequestParam(value = "auth_token") String authToken,
+                               @RequestParam(value = "count") Integer count,
+                               @RequestParam(value = "last") String last) {
+        if (last.equals("null"))
+            last = null;
 
-    public Response getResponse() {
-        TreeMap<String, Object> a = new TreeMap<String, Object>();
+        HashMap<String, Object> a = new HashMap<String, Object>();
         ArrayList<Meme> memes = new ArrayList<>();
 
-        Integer last = Integer.parseInt(links.get("last"));
-        Integer count = Integer.parseInt(links.get("count"));
-        String authToken = links.get("auth_token");
         User user = memeAppDatabase.getUserByAuthToken(authToken);
         if (user == null) {
             a.put("status", "fail");
-            return new Response(a);
+            a.put("message", "auth_token_is_invalid");
+
+            return a;
         }
 
-        ArrayList<String> listMemId = user.getListOfViewed();
-
-
-        for (Integer i = listMemId.size() - 1 - last; i >= 0 && i + count >= listMemId.size(); i--) {
-            memes.add(memeAppDatabase.getMemeById(new ObjectId(listMemId.get(i))));
-        }
+        memes = memeAppDatabase.oldMemesList(user, count, Documentable.toObjectId(last));
 
         a.put("status", "success");
         a.put("links", memes);
-        return (new Response(a));
+        return a;
     }
 }

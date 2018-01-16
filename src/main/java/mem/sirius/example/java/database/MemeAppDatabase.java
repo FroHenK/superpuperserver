@@ -2,9 +2,11 @@ package mem.sirius.example.java.database;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -91,13 +93,49 @@ public class MemeAppDatabase {
         commentsCollection = mongoDatabase.getCollection("comments");
     }
 
-    public ArrayList<Meme> memesList(User user, Integer num, String sortBy) {
+    public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId) {
         ArrayList<Meme> memesList = new ArrayList<>();
-        MongoCursor<Document> cursor = memesCollection.find().sort(new Document(sortBy, -1)).iterator();
+        FindIterable<Document> sort = memesCollection.find().sort(new Document(sortBy, -1));
+        if (objectId != null)
+            sort = sort.filter(Filters.lt("_id", objectId));
+        MongoCursor<Document> cursor = sort.iterator();
         Set<String> viewed = user.getIsViewed();
         while (cursor.hasNext() && memesList.size() < num) {
             Meme meme = new Meme(cursor.next());
             if (!viewed.contains(meme.getId().toHexString())) {
+                memesList.add(meme);
+            }
+        }
+        cursor.close();
+        return memesList;
+    }
+
+    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {
+        ArrayList<Meme> memesList = new ArrayList<>();
+        FindIterable<Document> sort = memesCollection.find().sort(new Document("rating", -1));
+        if (objectId != null)
+            sort = sort.filter(Filters.lt("_id", objectId));
+        sort = sort.limit(num);
+
+        MongoCursor<Document> cursor = sort.iterator();
+        while (cursor.hasNext()) {
+            memesList.add(new Meme(cursor.next()));
+        }
+        cursor.close();
+        return memesList;
+    }
+
+
+    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
+        ArrayList<Meme> memesList = new ArrayList<>();
+        FindIterable<Document> sort = memesCollection.find().sort(new Document("_id", 1));
+        if (objectId != null)
+            sort = sort.filter(Filters.lt("_id", objectId));
+        MongoCursor<Document> cursor = sort.iterator();
+        Set<String> viewed = user.getIsViewed();
+        while (cursor.hasNext() && memesList.size() < num) {
+            Meme meme = new Meme(cursor.next());
+            if (viewed.contains(meme.getId().toHexString())) {
                 memesList.add(meme);
             }
         }

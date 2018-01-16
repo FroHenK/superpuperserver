@@ -37,35 +37,6 @@ public class AppTest
 
         App.memeAppDatabase = new MemeAppDatabase(mongo_server, mongo_user, mongo_password, mongo_salt, DATABASE);
         memeAppDatabase = App.memeAppDatabase;
-//        {
-//            Request a = new Request("{}");
-//
-//            a.links.put("auth_token", "eY7XifPvqpTosI6HMANeT");
-//            a.links.put("meme_id", "5a588642edaaa300046e74bd");
-//            a.links.put("text", "I am very interested");
-//            a.links.put("parent_id", "5a59c09cb9bb8d363f8c775d");
-//
-//            comment_process comment_process = new comment_process(a);
-//            //System.out.println(comment_process.postComment());
-//            System.out.println(comment_process.getComments());
-//        }
-
-        {
-            Request a = new Request("{}");
-
-            a.links.put("auth_token", "8j4Y0rr7Mvb8pSo4voLXk");
-            a.links.put("last", "0");
-            a.links.put("count", "10");
-            a.links.put("sort_by", "time");
-            a.links.put("meme_id", "5a58ae090156ce754e858bc9");
-
-            get_new_list comment_process = new get_new_list(a);
-            //System.out.println(comment_process.postComment());
-            System.out.println(comment_process.getResponse());
-        }
-
-
-
     }
 
     private static String mongo_server;
