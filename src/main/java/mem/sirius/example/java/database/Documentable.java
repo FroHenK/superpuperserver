@@ -20,7 +20,7 @@ public abstract class Documentable {
     public static BsonTimestamp toBsonTimestamp(Long dateTime) {
         if (dateTime == null)
             return null;
-        return new BsonTimestamp();
+        return new BsonTimestamp(dateTime);
     }
 
     public static Long fromBsonTimestamp(BsonTimestamp timestamp) {
