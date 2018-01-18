@@ -12,10 +12,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MemeAppDatabase {
     private final String server;
@@ -107,7 +104,7 @@ public class MemeAppDatabase {
         return memesList;
     }
 
-    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {
+    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {//fixme it's broken
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().sort(new Document("rating", -1));
         if (objectId != null)
@@ -125,18 +122,19 @@ public class MemeAppDatabase {
 
     public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
         ArrayList<Meme> memesList = new ArrayList<>();
-        FindIterable<Document> sort = memesCollection.find().sort(new Document("_id", 1));
+        ArrayList<String> listOfViewed = user.getListOfViewed();
+        Iterator<String> iterator = listOfViewed.iterator();
         if (objectId != null)
-            sort = sort.filter(Filters.gt("_id", objectId));
-        MongoCursor<Document> cursor = sort.iterator();
-        Set<String> viewed = user.getIsViewed();
-        while (cursor.hasNext() && memesList.size() < num) {
-            Meme meme = new Meme(cursor.next());
-            if (viewed.contains(meme.getId().toHexString())) {
-                memesList.add(meme);
+            while (iterator.hasNext()) {
+                Meme meme = getMemeById(new ObjectId(iterator.next()));
+                if (meme.getId().equals(objectId))
+                    break;
             }
+        while (num > 0 && iterator.hasNext()) {
+            num--;
+            Meme meme = getMemeById(new ObjectId(iterator.next()));
+            memesList.add(meme);
         }
-        cursor.close();
         return memesList;
     }
 
