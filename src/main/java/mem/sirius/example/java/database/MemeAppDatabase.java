@@ -123,6 +123,7 @@ public class MemeAppDatabase {
     public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
         ArrayList<Meme> memesList = new ArrayList<>();
         ArrayList<String> listOfViewed = user.getListOfViewed();
+        Collections.reverse(listOfViewed);
         Iterator<String> iterator = listOfViewed.iterator();
         if (objectId != null)
             while (iterator.hasNext()) {

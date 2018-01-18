@@ -28,6 +28,13 @@ public class set_viewed {
         }
 
         ObjectId meme_id = new ObjectId(memeId);
+
+        if (user.getIsPostViewed(meme_id)) {
+            a.put("status", "success");
+            a.put("message", "meme_already_viewed");
+            return a;
+        }
+
         user.setIsPostViewed(meme_id, true);
         user.pushListOfViewed(meme_id);
 
