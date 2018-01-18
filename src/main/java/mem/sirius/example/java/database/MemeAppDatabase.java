@@ -127,7 +127,7 @@ public class MemeAppDatabase {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().sort(new Document("_id", 1));
         if (objectId != null)
-            sort = sort.filter(Filters.lt("_id", objectId));
+            sort = sort.filter(Filters.gt("_id", objectId));
         MongoCursor<Document> cursor = sort.iterator();
         Set<String> viewed = user.getIsViewed();
         while (cursor.hasNext() && memesList.size() < num) {
