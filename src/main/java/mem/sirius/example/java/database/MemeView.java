@@ -4,6 +4,7 @@ import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+@Deprecated //and unused
 public class MemeView extends Documentable {
     private String id;
     private String memeId;

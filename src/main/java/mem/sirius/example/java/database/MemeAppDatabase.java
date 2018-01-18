@@ -203,4 +203,18 @@ public class MemeAppDatabase {
         }
         return map;
     }
+
+    public ArrayList<Meme> userMemesList(ObjectId userId, Integer count, ObjectId objectId) {
+        ArrayList<Meme> memesList = new ArrayList<>();
+        FindIterable<Document> sort = memesCollection.find().filter(Filters.eq("author_id", userId)).sort(new Document("_id", -1));
+        if (objectId != null)
+            sort = sort.filter(Filters.lt("_id", objectId));
+        sort = sort.limit(count);
+        for (Document doc :
+                sort) {
+            Meme meme = new Meme(doc);
+            memesList.add(meme);
+        }
+        return memesList;
+    }
 }
