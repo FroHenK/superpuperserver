@@ -25,6 +25,8 @@ public class MemeAppDatabase {
     private final MongoCollection<Document> visitsCollection;
     private final MongoCollection<Document> commentsCollection;
 
+    private final HashMap<ObjectId, Meme> memesCache;
+
     public MongoCollection<Document> getCommentsCollection() {
         return commentsCollection;
     }
@@ -59,12 +61,17 @@ public class MemeAppDatabase {
     }
 
     public Meme getMemeById(ObjectId id) {
+        if (memesCache.containsKey(id)) //todo don't forget about cache if you will add ability to edit memes
+            return memesCache.get(id);
         MongoCursor<Document> cursor = memesCollection.find(new Document("_id", id)).iterator();
         if (!cursor.hasNext())
             return null;
         Document meme = cursor.next();
         cursor.close();
-        return new Meme(meme);
+        Meme memeObject = new Meme(meme);
+
+        memesCache.put(id, memeObject);
+        return memeObject;
     }
 
     private MongoClient mongoClient;
@@ -85,6 +92,13 @@ public class MemeAppDatabase {
         sessionsCollection = mongoDatabase.getCollection("sessions");
         visitsCollection = mongoDatabase.getCollection("visits");
         commentsCollection = mongoDatabase.getCollection("comments");
+
+        System.out.println("Initializing memes cache");
+        memesCache = new HashMap<>();
+        for (Document document : memesCollection.find()) {
+            Meme meme = new Meme(document);
+            memesCache.put(meme.getId(), meme);
+        }
     }
 
     public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId) {
@@ -120,7 +134,7 @@ public class MemeAppDatabase {
     }
 
 
-    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {//fixme too slow
+    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
         ArrayList<Meme> memesList = new ArrayList<>();
         ArrayList<String> listOfViewed = user.getListOfViewed();
         Collections.reverse(listOfViewed);
