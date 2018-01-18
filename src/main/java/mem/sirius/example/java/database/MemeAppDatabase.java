@@ -120,7 +120,7 @@ public class MemeAppDatabase {
     }
 
 
-    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
+    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {//fixme too slow
         ArrayList<Meme> memesList = new ArrayList<>();
         ArrayList<String> listOfViewed = user.getListOfViewed();
         Collections.reverse(listOfViewed);
