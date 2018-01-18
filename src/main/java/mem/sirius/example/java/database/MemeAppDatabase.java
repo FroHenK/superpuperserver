@@ -26,6 +26,7 @@ public class MemeAppDatabase {
     private final MongoCollection<Document> commentsCollection;
 
     private final HashMap<ObjectId, Meme> memesCache;
+    private final Thread memesCacheDaemon;
 
     public MongoCollection<Document> getCommentsCollection() {
         return commentsCollection;
@@ -84,8 +85,8 @@ public class MemeAppDatabase {
         this.salt = salt;
 
 
+        System.out.println("Establishing connection to the database");
         mongoClient = new MongoClient(new MongoClientURI(String.format("mongodb+srv://%s:%s@%s/test", user, password, server)));
-
         mongoDatabase = mongoClient.getDatabase(database);
         memesCollection = mongoDatabase.getCollection("memes");
         usersCollection = mongoDatabase.getCollection("users");
@@ -93,12 +94,32 @@ public class MemeAppDatabase {
         visitsCollection = mongoDatabase.getCollection("visits");
         commentsCollection = mongoDatabase.getCollection("comments");
 
+
         System.out.println("Initializing memes cache");
         memesCache = new HashMap<>();
         for (Document document : memesCollection.find()) {
             Meme meme = new Meme(document);
             memesCache.put(meme.getId(), meme);
         }
+
+        System.out.println("Starting memes cache updater daemon");
+        memesCacheDaemon = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                    for (Document document : memesCollection.find()) {
+                        Meme meme = new Meme(document);
+                        memesCache.put(meme.getId(), meme);
+                        Thread.sleep(2000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        memesCacheDaemon.setDaemon(true);
+        memesCacheDaemon.setName("Memes cache daemon");
+        memesCacheDaemon.start();
     }
 
     public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId) {
