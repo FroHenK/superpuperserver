@@ -39,17 +39,22 @@ public class get_new_list {
         memes = memeAppDatabase.memesList(user, count, "_id", Documentable.toObjectId(last));
 
         HashMap<String, String> usernamesMap = new HashMap<>();
-        for (Meme comment :
+        //assigning our rating to posts, so we could display that properly
+        HashMap<String, Integer> isRatedByUserMap = new HashMap<>();
+
+        for (Meme meme :
                 memes) {
-            usernamesMap.put(comment.getAuthorId().toHexString(), null);
+            usernamesMap.put(meme.getAuthorId().toHexString(), null);
+            isRatedByUserMap.put(meme.getId().toHexString(), user.getIsPostLiked(meme.getId()));
         }
 
         memeAppDatabase.assignUsernamesToIds(usernamesMap);
 
+
         a.put("status", "success");
         a.put("links", memes);
         a.put("usernames", usernamesMap);
-
+        a.put("likes", isRatedByUserMap);
         return a;
     }
 }
