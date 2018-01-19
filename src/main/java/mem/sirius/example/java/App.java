@@ -4,6 +4,9 @@ package mem.sirius.example.java;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import mem.sirius.example.java.database.MemeAppDatabase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +16,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @SpringBootApplication
@@ -30,6 +39,7 @@ public class App {
     private static final String FTP_USER = "MEME_FTP_USER";
     private static final String FTP_PASSWORD = "MEME_FTP_PASSWORD";
 
+    private static final String GOOGLE_SERVICE_ACCOUNT = "GOOGLE_SERVICE_ACCOUNT";
 
     public static int port = 0;
     public static final String myip = "http://azatismagilov00.siteme.org/ac/";
@@ -46,12 +56,22 @@ public class App {
     public static String ftp_password;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Version: 4 No jar");
 
-//        Document parse = Document.parse("{\"comments\":[{\"id\":{\"timestamp\":1516006157,\"machineIdentifier\":3246456,\"processIdentifier\":15670,\"counter\":15831739,\"time\":1516006157000,\"date\":1516006157000,\"timeSecond\":1516006157},\"memeId\":{\"timestamp\":1515750978,\"machineIdentifier\":15575715,\"processIdentifier\":4,\"counter\":7238845,\"time\":1515750978000,\"date\":1515750978000,\"timeSecond\":1515750978},\"parentCommentId\":null,\"authorId\":{\"timestamp\":1515962055,\"machineIdentifier\":4093892,\"processIdentifier\":4,\"counter\":13808805,\"time\":1515962055000,\"date\":1515962055000,\"timeSecond\":1515962055},\"text\":\"kek\",\"time\":{\"value\":6511196864849641474,\"time\":1516006157,\"bsonType\":\"TIMESTAMP\",\"inc\":2,\"document\":false,\"string\":false,\"number\":false,\"int32\":false,\"int64\":false,\"decimal128\":false,\"double\":false,\"boolean\":false,\"objectId\":false,\"dbpointer\":false,\"timestamp\":true,\"binary\":false,\"dateTime\":false,\"symbol\":false,\"regularExpression\":false,\"javaScript\":false,\"javaScriptWithScope\":false,\"array\":false,\"null\":false}}],\"usernames\":{\"5a5bbec73e77c40004d2b4a5\":\"ggbet\"}}");
-//        Document comment = (Document)parse.get("comments", ArrayList.class).get(0);
-//        Comment comment1 = new Comment(comment);
+        InputStream firebaseServiceJsonStream = null;
+
+        if (System.getenv().containsKey(GOOGLE_SERVICE_ACCOUNT)) {
+            firebaseServiceJsonStream = new ByteArrayInputStream(System.getenv(GOOGLE_SERVICE_ACCOUNT).getBytes(StandardCharsets.UTF_8.name()));
+        } else {
+            firebaseServiceJsonStream = new FileInputStream(System.getProperty("user.home") + "/memeService.json");
+        }
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(firebaseServiceJsonStream))
+                .build();
+
+        FirebaseApp.initializeApp(options);
+
 
         port = Integer.parseInt(System.getenv(PORT) != null ? System.getenv(PORT) : "8080");
 

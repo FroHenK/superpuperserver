@@ -8,7 +8,7 @@ import java.util.*;
 public class User extends Documentable {
 
     private String id;
-    private Integer vkUserId;
+    private String googleUID;
     private String username;
     private Map<String, Integer> isLiked;
     private Set<String> isViewed;
@@ -18,8 +18,8 @@ public class User extends Documentable {
         return toObjectId(id);
     }
 
-    public Integer getVkUserId() {
-        return vkUserId;
+    public String getGoogleUID() {
+        return googleUID;
     }
 
     public String getUsername() {
@@ -52,8 +52,8 @@ public class User extends Documentable {
         return this;
     }
 
-    public User setVkUserId(Integer vkUserId) {
-        this.vkUserId = vkUserId;
+    public User setGoogleUID(String googleUID) {
+        this.googleUID = googleUID;
         return this;
     }
 
@@ -122,8 +122,8 @@ public class User extends Documentable {
         if (id != null)
             document.append("_id", toObjectId(id));
 
-        if (vkUserId != null)
-            document.append("vk_user_id", vkUserId);
+        if (googleUID != null)
+            document.append("vk_user_id", googleUID);
 
         if (username != null)
             document.append("username", username);
@@ -148,7 +148,7 @@ public class User extends Documentable {
             id = fromObjectId(document.getObjectId("_id"));
 
         if (document.containsKey("vk_user_id"))
-            vkUserId = document.getInteger("vk_user_id");
+            googleUID = document.getString("vk_user_id");
 
         if (document.containsKey("username"))
             username = document.getString("username");

@@ -49,6 +49,10 @@ public class MemeAppDatabase {
     }
 
     public User getUserByAuthToken(String authToken) {
+        return getUserByAuthToken(authToken, true);
+    }
+
+    public User getUserByAuthToken(String authToken, Boolean nullIfVoidUsername) {
         if (sessionsCollection.count(new Document("auth_token", authToken)) != 0) {
             MongoCursor<Document> cursor = sessionsCollection.find(new Document("auth_token", authToken)).iterator();
             Document session = cursor.next();
@@ -56,7 +60,12 @@ public class MemeAppDatabase {
             cursor = usersCollection.find(new Document("_id", session.getObjectId("user_id"))).iterator();
             Document user = cursor.next();
             cursor.close();
-            return new User(user);
+            User userObject = new User(user);
+
+            if (nullIfVoidUsername && userObject.getUsername() == null)
+                return null;
+
+            return userObject;
         }
         return null;
     }
