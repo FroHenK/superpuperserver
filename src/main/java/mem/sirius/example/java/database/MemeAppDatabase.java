@@ -25,6 +25,10 @@ public class MemeAppDatabase {
     private final MongoCollection<Document> visitsCollection;
     private final MongoCollection<Document> commentsCollection;
 
+    public HashMap<ObjectId, Meme> getMemesCache() {
+        return memesCache;
+    }
+
     private final HashMap<ObjectId, Meme> memesCache;
     private final Thread memesCacheDaemon;
 

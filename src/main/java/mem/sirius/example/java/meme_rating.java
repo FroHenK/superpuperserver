@@ -46,6 +46,10 @@ public class meme_rating {
 
         Document memeIdQuery = new Meme().setId(meme.getId()).toDocument();
         memesCollection.updateOne(memeIdQuery, new Document("$set", new Document("rating", meme.getRating())));
+        HashMap<ObjectId, Meme> memesCache = App.memeAppDatabase.getMemesCache();
+        if (memesCache.containsKey(meme.getId())) {
+            memesCache.get(meme.getId()).setRating(meme.getRating());
+        }
 
         Document userIdQuery = new User().setId(user.getId()).toDocument();
         usersCollection.updateOne(userIdQuery, new Document("$set", user.toDocument()));
