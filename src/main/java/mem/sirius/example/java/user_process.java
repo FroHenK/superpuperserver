@@ -14,12 +14,63 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
+import static mem.sirius.example.java.App.memeAppDatabase;
+
 @RestController
 public class user_process {
     private static final Integer APP_ID = 6327207;
     private static final String CLIENT_SECRET = "LACdimcvRWOqsQJUrsOv";
 
-    //TODO create user login and registration methods
+    private boolean isValidUsername(String username) {
+        return !username.contains("uganda");
+    }
+
+    @RequestMapping(value = "/set_username")
+    public HashMap<String, Object> setUsername(@RequestParam(value = "auth_token") String authToken,
+                                               @RequestParam(value = "username") String username) {
+        HashMap<String, Object> a = new HashMap<>();
+        System.out.println("New set username attempt");
+        MongoCollection<Document> usersCollection = memeAppDatabase.getUsersCollection();
+
+
+        Document userUsernameQuery = new User().setUsername(username).toDocument();
+
+        if (!isValidUsername(username)) {
+            a.put("status", "fail");
+            a.put("message", "username_invalid");
+            return a;
+        }
+
+        if (usersCollection.count(userUsernameQuery) != 0) {
+            a.put("status", "fail");
+            a.put("message", "username_is_occupied");
+            return a;
+        }
+
+        User user = memeAppDatabase.getUserByAuthToken(authToken, false);
+        if (user == null) {
+            a.put("status", "fail");
+            a.put("message", "auth_token_is_invalid");
+
+            return a;
+        }
+
+
+        if (user.getUsername() != null) {
+            a.put("status", "fail");
+            a.put("message", "username_already_set");
+        }
+
+        user.setUsername(username);//todo check if username acceptable
+
+        Document userIdQuery = new User().setId(user.getId()).toDocument();
+        usersCollection.updateOne(userIdQuery, new Document("$set", new Document("username", user.getUsername())));
+
+
+        a.put("status", "success");
+        a.put("message", "ok");
+        return a;
+    }
 
     @RequestMapping(value = "/get_auth_token")
     public HashMap<String, Object> getAuthToken(@RequestParam(value = "token") String token) {
@@ -93,6 +144,7 @@ public class user_process {
 
             if (user.getUsername() == null) {
                 a.put("status", "void_username");
+                return a;
             }
 
             a.put("status", "success");
