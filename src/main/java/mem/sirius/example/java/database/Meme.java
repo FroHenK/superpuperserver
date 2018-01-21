@@ -11,6 +11,8 @@ public class Meme extends Documentable {
     private String id;
     private String title;
     private Integer rating;
+    public Boolean isAmoral;
+
 
 
     public ObjectId getId() {
@@ -105,6 +107,8 @@ public class Meme extends Documentable {
         if (rating != null)
             document.append("rating", rating);
 
+        if (isAmoral != null)
+            document.append("is_amoral", isAmoral);
         return document;
     }
 
@@ -126,6 +130,10 @@ public class Meme extends Documentable {
 
         if (document.containsKey("rating"))
             rating = document.getInteger("rating");
+
+
+        if (document.containsKey("is_amoral"))
+            isAmoral = document.getBoolean("is_amoral");
     }
 
 

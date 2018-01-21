@@ -13,6 +13,9 @@ public class User extends Documentable {
     private Map<String, Integer> isLiked;
     private Set<String> isViewed;
     private ArrayList<String> listOfViewed;
+    public Set<String> subscriptions;
+    public Boolean isAmoral;
+
 
     public ObjectId getId() {
         return toObjectId(id);
@@ -46,6 +49,7 @@ public class User extends Documentable {
     public ArrayList<String> getListOfViewed() {
         return listOfViewed;
     }
+
 
     public User setId(ObjectId id) {
         this.id = fromObjectId(id);
@@ -103,6 +107,8 @@ public class User extends Documentable {
             isLiked = new HashMap<>();
         if (isViewed == null)
             isViewed = new TreeSet<>();
+        if (subscriptions == null)
+            subscriptions = new TreeSet<>();
         if (listOfViewed == null)
             listOfViewed = new ArrayList<>();
     }
@@ -115,6 +121,8 @@ public class User extends Documentable {
             isViewed = new TreeSet<>();
         if (listOfViewed == null)
             listOfViewed = new ArrayList<>();
+        if (subscriptions == null)
+            subscriptions = new TreeSet<>();
     }
 
     public Document toDocument() {
@@ -137,8 +145,14 @@ public class User extends Documentable {
         if (isViewed != null && !isViewed.isEmpty())
             document.append("is_viewed", isViewed);
 
+        if (subscriptions != null && !subscriptions.isEmpty())
+            document.append("subscriptions", subscriptions);
+
         if (listOfViewed != null && !listOfViewed.isEmpty())
             document.append("list_of_viewed", listOfViewed);
+
+        if (isAmoral != null)
+            document.append("is_amoral", isAmoral);
 
         return document;
     }
@@ -162,9 +176,19 @@ public class User extends Documentable {
                 isViewed = new TreeSet<>(is_viewed);
             }
         }
+
+        if (document.containsKey("subscriptions")) {
+            ArrayList<String> subscriptions = document.get("subscriptions", ArrayList.class);
+            if (subscriptions != null && subscriptions.size() > 0) {
+                this.subscriptions = new TreeSet<>(subscriptions);
+            }
+        }
+
         if (document.containsKey("list_of_viewed"))
             listOfViewed = document.get("list_of_viewed", ArrayList.class);
 
+        if (document.containsKey("is_amoral"))
+            isAmoral = document.getBoolean("is_amoral");
     }
 
 

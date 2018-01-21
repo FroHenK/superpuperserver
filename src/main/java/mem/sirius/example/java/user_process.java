@@ -25,9 +25,10 @@ public class user_process {
         return !username.contains("uganda");
     }
 
-    @RequestMapping(value = "/set_username")
+    @RequestMapping(value = "/set_username")//and set is_amoral too
     public HashMap<String, Object> setUsername(@RequestParam(value = "auth_token") String authToken,
-                                               @RequestParam(value = "username") String username) {
+                                               @RequestParam(value = "username") String username,
+                                               @RequestParam(value = "is_amoral",defaultValue = "false") Boolean isAmoral) {
         HashMap<String, Object> a = new HashMap<>();
         System.out.println("New set username attempt");
         MongoCollection<Document> usersCollection = memeAppDatabase.getUsersCollection();
@@ -64,7 +65,7 @@ public class user_process {
         user.setUsername(username);//todo check if username acceptable
 
         Document userIdQuery = new User().setId(user.getId()).toDocument();
-        usersCollection.updateOne(userIdQuery, new Document("$set", new Document("username", user.getUsername())));
+        usersCollection.updateOne(userIdQuery, new Document("$set", new Document("username", user.getUsername()).append("is_amoral",isAmoral)));
 
 
         a.put("status", "success");
@@ -112,7 +113,9 @@ public class user_process {
         String authToken = new RandomString().nextString();
 
         ObjectId userId = new ObjectId();
-        usersCollection.insertOne(new User().setId(userId).setGoogleUID(googleUID).toDocument());
+        User user = new User();
+        user.subscriptions.add("keke");
+        usersCollection.insertOne(user.setId(userId).setGoogleUID(googleUID).toDocument());
         sessionsCollection.insertOne(new Session(userId, authToken).toDocument());
 
 

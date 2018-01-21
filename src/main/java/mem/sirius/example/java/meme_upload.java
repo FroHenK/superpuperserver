@@ -33,12 +33,20 @@ public class meme_upload {
 
     @RequestMapping(value = "/upload_meme", method = RequestMethod.POST)
     public HashMap<String, Object> getResponse(@RequestParam(value = "auth_token") String authToken,
-                                               @RequestParam(value = "file") MultipartFile file) {
+                                               @RequestParam(value = "title") String title,
+                                               @RequestParam(value = "file") MultipartFile file,
+                                               @RequestParam(value = "is_amoral", defaultValue = "false") Boolean isAmoral) {
         HashMap<String, Object> a = new HashMap<>();
 
         if (file.getSize() > MAX_FILE_SIZE) {
             a.put("status", "fail");
             a.put("message", "file_too_big");
+            return a;
+        }
+
+        if (title.length() > 200 || title.length() < 1) {
+            a.put("status", "fail");
+            a.put("message", "invalid_title");
             return a;
         }
 
@@ -112,7 +120,9 @@ public class meme_upload {
         String memeUrl = URL_PREFIX + filename + extension;
         a.put("link", memeUrl);
 
-        memesCollection.insertOne(new Meme(memeUrl, new BsonTimestamp()).setRating(0).setAuthorId(user.getId()).toDocument());
+        Meme meme = new Meme(memeUrl, new BsonTimestamp());
+        meme.isAmoral = isAmoral;
+        memesCollection.insertOne(meme.setRating(0).setTitle(title).setAuthorId(user.getId()).toDocument());
 
         //status(success,fail), link
         return a;

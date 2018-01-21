@@ -152,16 +152,18 @@ public class MemeAppDatabase {
         return memesList;
     }
 
-    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {//fixme it's broken
+    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().sort(new Document("rating", -1));
-        if (objectId != null)
-            sort = sort.filter(Filters.lt("_id", objectId));
-        sort = sort.limit(num);
-
         MongoCursor<Document> cursor = sort.iterator();
-        while (cursor.hasNext()) {
-            memesList.add(new Meme(cursor.next()));
+        while (objectId != null && cursor.hasNext()) {
+            Meme meme = new Meme(cursor.next());
+            if (meme.getId().equals(objectId))
+                break;
+        }
+        while (cursor.hasNext() && 0 < num--) {
+            Meme meme = new Meme(cursor.next());
+            memesList.add(meme);
         }
         cursor.close();
         return memesList;
