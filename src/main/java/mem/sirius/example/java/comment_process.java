@@ -89,6 +89,7 @@ public class comment_process {
         commentsCollection.insertOne(comment.toDocument());
 
         a.put("status", "success");
+        a.put("get_comments", getComments(meme_id));
 
         return a;
     }
