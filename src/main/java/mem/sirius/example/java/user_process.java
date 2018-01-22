@@ -22,7 +22,7 @@ public class user_process {
     private static final String CLIENT_SECRET = "LACdimcvRWOqsQJUrsOv";
 
     private boolean isValidUsername(String username) {
-        return !username.contains("uganda");
+        return username.matches("^[a-zA-Z][a-zA-Z0-9-_]{1,20}$") && !username.contains("uganda");
     }
 
     @RequestMapping(value = "/set_username")//and set is_amoral too
