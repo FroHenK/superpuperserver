@@ -57,7 +57,7 @@ public class App {
 
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Version: 4 No jar");
+        System.out.println("Version: 5 Deadline is very close");
 
         InputStream firebaseServiceJsonStream = null;
 

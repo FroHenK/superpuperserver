@@ -119,11 +119,11 @@ public class MemeAppDatabase {
         memesCacheDaemon = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(200);
                     for (Document document : memesCollection.find()) {
                         Meme meme = new Meme(document);
                         memesCache.put(meme.getId(), meme);
-                        Thread.sleep(2000);
+                        Thread.sleep(200);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -135,11 +135,13 @@ public class MemeAppDatabase {
         memesCacheDaemon.start();
     }
 
-    public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId) {
+    public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().sort(new Document(sortBy, -1));
         if (objectId != null)
             sort = sort.filter(Filters.lt("_id", objectId));
+        if (!amoral)
+            sort = sort.filter(Filters.eq("is_amoral", false));
         MongoCursor<Document> cursor = sort.iterator();
         Set<String> viewed = user.getIsViewed();
         while (cursor.hasNext() && memesList.size() < num) {
@@ -152,7 +154,7 @@ public class MemeAppDatabase {
         return memesList;
     }
 
-    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId) {
+    public ArrayList<Meme> topMemesList(Integer num, ObjectId objectId, User user, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().sort(new Document("rating", -1));
         MongoCursor<Document> cursor = sort.iterator();
@@ -161,16 +163,19 @@ public class MemeAppDatabase {
             if (meme.getId().equals(objectId))
                 break;
         }
-        while (cursor.hasNext() && 0 < num--) {
+        while (cursor.hasNext() && num > 0) {
             Meme meme = new Meme(cursor.next());
+            if (user.getIsViewed().contains(meme.getId().toHexString()) || !(amoral || !meme.isAmoral))
+                continue;
             memesList.add(meme);
+            num--;
         }
         cursor.close();
         return memesList;
     }
 
 
-    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId) {
+    public ArrayList<Meme> oldMemesList(User user, Integer num, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
         ArrayList<String> listOfViewed = user.getListOfViewed();
         Collections.reverse(listOfViewed);
@@ -184,6 +189,8 @@ public class MemeAppDatabase {
         while (num > 0 && iterator.hasNext()) {
             num--;
             Meme meme = getMemeById(new ObjectId(iterator.next()));
+            if (meme.isAmoral && !amoral)
+                continue;
             memesList.add(meme);
         }
         return memesList;
@@ -219,11 +226,13 @@ public class MemeAppDatabase {
         return map;
     }
 
-    public ArrayList<Meme> userMemesList(ObjectId userId, Integer count, ObjectId objectId) {
+    public ArrayList<Meme> userMemesList(ObjectId userId, Integer count, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().filter(Filters.eq("author_id", userId)).sort(new Document("_id", -1));
         if (objectId != null)
             sort = sort.filter(Filters.lt("_id", objectId));
+        if (!amoral)
+            sort.filter(Filters.eq("is_amoral", false));
         sort = sort.limit(count);
         for (Document doc :
                 sort) {

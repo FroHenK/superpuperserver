@@ -5,7 +5,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
-import jdk.nashorn.internal.lookup.MethodHandleFactory;
 import mem.sirius.example.java.database.Meme;
 import mem.sirius.example.java.database.User;
 import org.bson.Document;
@@ -84,7 +83,8 @@ public class subscription_process {
     @RequestMapping(value = "/get_subscriptions_list")
     public HashMap<String, Object> get_subscriptions_list(@RequestParam(value = "auth_token") String authToken,
                                                           @RequestParam(value = "count") Integer count,
-                                                          @RequestParam(value = "last") String last) {
+                                                          @RequestParam(value = "last") String last,
+                                                          @RequestParam(value = "amoral", defaultValue = "false") Boolean amoral) {
         if (Objects.equals(last, "null"))
             last = null;
 
@@ -110,7 +110,7 @@ public class subscription_process {
         Set<String> viewed = user.getIsViewed();
         while (cursor.hasNext() && memes.size() < count) {
             Meme meme = new Meme(cursor.next());
-            if ((!viewed.contains(meme.getId().toHexString())) && user.subscriptions.contains(meme.getAuthorId().toHexString())) {
+            if ((amoral || !meme.isAmoral) && (!viewed.contains(meme.getId().toHexString())) && user.subscriptions.contains(meme.getAuthorId().toHexString())) {
                 memes.add(meme);
             }
         }

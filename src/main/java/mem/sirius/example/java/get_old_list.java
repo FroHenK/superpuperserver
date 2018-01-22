@@ -18,7 +18,8 @@ public class get_old_list {
     @RequestMapping(value = "/get_old_list")
     public HashMap getResponse(@RequestParam(value = "auth_token") String authToken,
                                @RequestParam(value = "count") Integer count,
-                               @RequestParam(value = "last") String last) {
+                               @RequestParam(value = "last") String last,
+                               @RequestParam(value = "amoral", defaultValue = "false") Boolean amoral) {
         if (last.equals("null"))
             last = null;
 
@@ -33,7 +34,7 @@ public class get_old_list {
             return a;
         }
 
-        memes = memeAppDatabase.oldMemesList(user, count, Documentable.toObjectId(last));
+        memes = memeAppDatabase.oldMemesList(user, count, Documentable.toObjectId(last), amoral);
 
         HashMap<String, String> usernamesMap = new HashMap<>();
         //assigning our rating to posts, so we could display that properly

@@ -19,7 +19,8 @@ public class get_user_list {
     public HashMap getResponse(@RequestParam(value = "auth_token") String authToken,
                                @RequestParam(value = "user_id") String user_id,
                                @RequestParam(value = "count") Integer count,
-                               @RequestParam(value = "last") String last) {
+                               @RequestParam(value = "last") String last,
+                               @RequestParam(value = "amoral", defaultValue = "false") Boolean amoral) {
         if (last.equals("null"))
             last = null;
 
@@ -37,7 +38,7 @@ public class get_user_list {
         }
 
 
-        memes = memeAppDatabase.userMemesList(userId, count, Documentable.toObjectId(last));
+        memes = memeAppDatabase.userMemesList(userId, count, Documentable.toObjectId(last), amoral);
 
         HashMap<String, String> usernamesMap = new HashMap<>();
 

@@ -14,7 +14,6 @@ public class User extends Documentable {
     private Set<String> isViewed;
     private ArrayList<String> listOfViewed;
     public Set<String> subscriptions;
-    public Boolean isAmoral;
 
 
     public ObjectId getId() {
@@ -151,8 +150,6 @@ public class User extends Documentable {
         if (listOfViewed != null && !listOfViewed.isEmpty())
             document.append("list_of_viewed", listOfViewed);
 
-        if (isAmoral != null)
-            document.append("is_amoral", isAmoral);
 
         return document;
     }
@@ -186,9 +183,6 @@ public class User extends Documentable {
 
         if (document.containsKey("list_of_viewed"))
             listOfViewed = document.get("list_of_viewed", ArrayList.class);
-
-        if (document.containsKey("is_amoral"))
-            isAmoral = document.getBoolean("is_amoral");
     }
 
 
