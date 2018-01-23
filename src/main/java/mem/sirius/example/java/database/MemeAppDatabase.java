@@ -149,7 +149,11 @@ public class MemeAppDatabase {
         filters.toArray(bson);
 
 
-        FindIterable<Document> sort = memesCollection.find().filter(Filters.and(bson)).sort(new Document(sortBy, -1));
+        FindIterable<Document> sort = memesCollection.find().sort(new Document(sortBy, -1));
+
+
+        if (filters.size() != 0)
+            sort = sort.filter(Filters.and(bson));
 
 
         MongoCursor<Document> cursor = sort.iterator();
