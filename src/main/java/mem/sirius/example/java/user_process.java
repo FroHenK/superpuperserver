@@ -176,6 +176,7 @@ public class user_process {
             a.put("user_id", user.getId().toHexString());
             a.put("auth_token", authToken);
             a.put("username", user.getUsername());
+            a.put("avatar_url", user.avatarUrl);
 
             return a;
         }
