@@ -13,11 +13,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import static mem.sirius.example.java.App.memeAppDatabase;
 
 @RestController
 public class user_process {
+
+    final static public String avatarUrls[] = {"http://azatismagilov00.siteme.org/avatar/icon1.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon2.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon3.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon4.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon5.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon6.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon7.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon8.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon9.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon10.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon11.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon12.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon13.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon14.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon15.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon16.jpg",
+            "http://azatismagilov00.siteme.org/avatar/icon17.jpg"};
+
+
     private static final Integer APP_ID = 6327207;
     private static final String CLIENT_SECRET = "LACdimcvRWOqsQJUrsOv";
 
@@ -114,6 +135,8 @@ public class user_process {
         ObjectId userId = new ObjectId();
         User user = new User();
         user.subscriptions.add("keke");
+        user.avatarUrl = avatarUrls[new Random().nextInt(avatarUrls.length)];
+
         usersCollection.insertOne(user.setId(userId).setGoogleUID(googleUID).toDocument());
         sessionsCollection.insertOne(new Session(userId, authToken).toDocument());
 
