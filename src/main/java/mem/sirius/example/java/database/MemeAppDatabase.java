@@ -226,6 +226,27 @@ public class MemeAppDatabase {
         return map;
     }
 
+
+    public Map<String, String> assignAvatarUrlToIds(HashMap<String, String> map) {
+        Bson fieldsProjection = Projections.fields(Projections.include("avatar_url"), Projections.excludeId());
+        for (String objectId :
+                map.keySet()) {
+            Document userQuery = new User().setId(new ObjectId(objectId)).toDocument();
+            Document userDocument = usersCollection.find(userQuery).projection(fieldsProjection).first();
+            map.put(objectId, new User(userDocument).avatarUrl);
+        }
+        return map;
+    }
+
+    public Map<String, Boolean> assignIsSubscribedToIds(HashMap<String, Boolean> map, User user) {
+        for (String userId :
+                map.keySet()) {
+            map.put(userId, user.subscriptions.contains(userId));
+        }
+        return map;
+    }
+
+
     public ArrayList<Meme> userMemesList(ObjectId userId, Integer count, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
         FindIterable<Document> sort = memesCollection.find().filter(Filters.eq("author_id", userId)).sort(new Document("_id", -1));

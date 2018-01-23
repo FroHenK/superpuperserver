@@ -120,12 +120,15 @@ public class subscription_process {
         //assigning our rating to posts, so we could display that properly
         HashMap<String, Integer> isRatedByUserMap = new HashMap<>();
 
+        HashMap<String, String> avatarUrlsMap = new HashMap<>();
         for (Meme meme :
                 memes) {
             usernamesMap.put(meme.getAuthorId().toHexString(), null);
             isRatedByUserMap.put(meme.getId().toHexString(), user.getIsPostLiked(meme.getId()));
+            avatarUrlsMap.put(meme.getAuthorId().toHexString(), null);
         }
 
+        memeAppDatabase.assignAvatarUrlToIds(avatarUrlsMap);
         memeAppDatabase.assignUsernamesToIds(usernamesMap);
 
 
@@ -133,6 +136,7 @@ public class subscription_process {
         a.put("links", memes);
         a.put("usernames", usernamesMap);
         a.put("likes", isRatedByUserMap);
+        a.put("avatar_urls", avatarUrlsMap);
         return a;
     }
 

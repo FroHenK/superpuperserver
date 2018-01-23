@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static mem.sirius.example.java.App.memeAppDatabase;
+
 @RestController
 public class comment_process {
     public static final int MAX_COMMENT_LENGTH = 300;
@@ -26,17 +28,21 @@ public class comment_process {
         ArrayList<Comment> comments = App.memeAppDatabase.commentsList(new ObjectId(memeId));
 
         HashMap<String, String> usernamesMap = new HashMap<>();
+        HashMap<String, String> avatarUrlsMap = new HashMap<>();
 
         for (Comment comment :
                 comments) {
             usernamesMap.put(comment.getAuthorId().toHexString(), null);
+            avatarUrlsMap.put(comment.getAuthorId().toHexString(), null);
         }
 
+        memeAppDatabase.assignAvatarUrlToIds(avatarUrlsMap);
         App.memeAppDatabase.assignUsernamesToIds(usernamesMap);
 
         map.put("status", "success");
         map.put("comments", comments);
         map.put("usernames", usernamesMap);
+        map.put("avatar_urls", avatarUrlsMap);
 
 
         return map;

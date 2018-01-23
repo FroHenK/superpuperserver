@@ -14,7 +14,7 @@ public class User extends Documentable {
     private Set<String> isViewed;
     private ArrayList<String> listOfViewed;
     public Set<String> subscriptions;
-
+    public String avatarUrl;
 
     public ObjectId getId() {
         return toObjectId(id);
@@ -135,8 +135,8 @@ public class User extends Documentable {
         if (username != null)
             document.append("username", username);
 
-        if (username != null)
-            document.append("username", username);
+        if (avatarUrl != null)
+            document.append("avatar_url", avatarUrl);
 
         if (isLiked != null && !isLiked.isEmpty())
             document.append("is_liked", isLiked);
@@ -183,6 +183,9 @@ public class User extends Documentable {
 
         if (document.containsKey("list_of_viewed"))
             listOfViewed = document.get("list_of_viewed", ArrayList.class);
+
+        if (document.containsKey("avatar_url"))
+            avatarUrl = document.getString("avatar_url");
     }
 
 
