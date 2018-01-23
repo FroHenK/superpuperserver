@@ -63,6 +63,7 @@ public class get_user_list {
         a.put("usernames", usernamesMap);
         a.put("likes", isRatedByUserMap);
         a.put("avatar_urls", avatarUrlsMap);
+        a.put("is_subscribed", user.subscriptions.contains(userId.toHexString()));
         return a;
     }
 }
