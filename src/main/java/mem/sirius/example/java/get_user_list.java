@@ -24,6 +24,7 @@ public class get_user_list {
         if (last.equals("null"))
             last = null;
 
+        System.out.println("get_user_memes_list with user_id: " + user_id + "; last: " + last);
 
         HashMap<String, Object> a = new HashMap<>();
         ArrayList<Meme> memes;

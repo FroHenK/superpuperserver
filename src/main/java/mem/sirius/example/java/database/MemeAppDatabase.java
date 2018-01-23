@@ -137,11 +137,21 @@ public class MemeAppDatabase {
 
     public ArrayList<Meme> memesList(User user, Integer num, String sortBy, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
-        FindIterable<Document> sort = memesCollection.find().sort(new Document(sortBy, -1));
+        ArrayList<Bson> filters = new ArrayList<>();
+
         if (objectId != null)
-            sort = sort.filter(Filters.lt("_id", objectId));
+            filters.add(Filters.lt("_id", objectId));
         if (!amoral)
-            sort = sort.filter(Filters.eq("is_amoral", false));
+            filters.add(Filters.eq("is_amoral", false));
+
+
+        Bson bson[] = new Bson[filters.size()];
+        filters.toArray(bson);
+
+
+        FindIterable<Document> sort = memesCollection.find().filter(Filters.and(bson)).sort(new Document(sortBy, -1));
+
+
         MongoCursor<Document> cursor = sort.iterator();
         Set<String> viewed = user.getIsViewed();
         while (cursor.hasNext() && memesList.size() < num) {
@@ -249,12 +259,21 @@ public class MemeAppDatabase {
 
     public ArrayList<Meme> userMemesList(ObjectId userId, Integer count, ObjectId objectId, Boolean amoral) {
         ArrayList<Meme> memesList = new ArrayList<>();
-        FindIterable<Document> sort = memesCollection.find().filter(Filters.eq("author_id", userId)).sort(new Document("_id", -1));
+        ArrayList<Bson> filters = new ArrayList<>();
+
+        filters.add(Filters.eq("author_id", userId));
         if (objectId != null)
-            sort = sort.filter(Filters.lt("_id", objectId));
+            filters.add(Filters.lt("_id", objectId));
         if (!amoral)
-            sort.filter(Filters.eq("is_amoral", false));
-        sort = sort.limit(count);
+            filters.add(Filters.eq("is_amoral", false));
+
+
+        Bson bson[] = new Bson[filters.size()];
+        filters.toArray(bson);
+
+        FindIterable<Document> sort = memesCollection.find().filter(Filters.and(bson)).sort(new Document("_id", -1)).limit(count);
+
+
         for (Document doc :
                 sort) {
             Meme meme = new Meme(doc);
